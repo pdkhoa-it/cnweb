@@ -1,0 +1,17 @@
+
+.header{
+    position: relative;
+}
+
+.banner{
+
+}
+
+.link-header a{
+    color: white;
+    margin: 5px;
+}
+
+#getYear{
+    border-top: solid 1px;
+}
