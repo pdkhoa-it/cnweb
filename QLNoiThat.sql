@@ -9,15 +9,14 @@ go
 
 create table PhanQuyen
 (
-	Ma varchar(10) primary key,
+	Ma int identity primary key,
 	Ten nvarchar(50)
 );
 go
 
-insert into PhanQuyen values('AD',N'Quản Trị Viên');
-insert into PhanQuyen values('NV',N'Nhân Viên');
-insert into PhanQuyen values('KH',N'Khách Hàng');
-
+insert into PhanQuyen values(N'Quản Trị Viên');
+insert into PhanQuyen values(N'Nhân Viên');
+insert into PhanQuyen values(N'Khách Hàng');
 
 create table TaiKhoan
 (
@@ -31,7 +30,7 @@ create table TaiKhoan
 	GioiTinh bit,
 	DiaChi nvarchar(100),
 	Sdt varchar(20),
-	MaQuyen varchar(10),
+	MaQuyen int,
 	
 	foreign key(MaQuyen) references PhanQuyen(Ma)
 );

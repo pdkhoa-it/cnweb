@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLNoiThat" Class="QLNoiThatDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-FOP50RD3\SQLEXPRESS;Initial Catalog=QLNoiThat;Integrated Security=True" SettingsObjectName="Database.Properties.Settings" SettingsPropertyName="QLNoiThatConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.PhanQuyen" Member="PhanQuyens">
+    <Type Name="PhanQuyen">
+      <Column Name="Ma" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

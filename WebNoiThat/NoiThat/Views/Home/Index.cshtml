@@ -1,0 +1,83 @@
+﻿@model List<Database.PhanQuyen>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div>
+    <table border="1" cellspacing="0" id="PhanQuyenList">
+        <tr>
+            <th>Tên quyền</th>
+            <th>Action</th>
+        </tr>
+        @foreach(Database.PhanQuyen item in Model)
+        {
+            <tr id="tr_@item.Ma">
+                <td>@item.Ten</td>
+                <td>
+                    <a href="javascript:Delete('@item.Ma','@item.Ten')">[Xóa]</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<h2>Thêm phân quyền</h2>
+<input type="text" id="txtTenQuyen" placeholder="Tên quyền" /> <br/>
+<a class="btn btn-danger"  onclick="ThemPhanQuyen()">Thêm</a>
+
+
+<script>
+    function ThemPhanQuyen() {
+        var tenquyen = $('#txtTenQuyen').val();
+
+        var form = new FormData();
+        form.append("tenquyen", tenquyen);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST",'https://localhost:44312/Home/AddPhanQuyen', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var content = xhr.responseText;
+                var json_ct = JSON.parse(content);
+                if (json_ct.Data.status == "OK") {
+
+                    var maquyen = json_ct.Data.message;
+
+                    var tr = '<tr><td>' + tenquyen + '</td><td><a href = "javascript:Delete(\'' + maquyen + '\',\'' + tenquyen + '\')">[Xóa]</a></td></tr>';
+                    $('#PhanQuyenList').append(tr);
+
+                    $('#txtTenQuyen').val('');
+                }
+            }
+        }
+
+        xhr.send(form);
+
+    }
+
+
+    function Delete(ma, ten) {
+        if (confirm('Bạn có chắc là xóa :' + ten)) {
+            var form = new FormData();
+            form.append('ma', ma);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", 'https://localhost:44312/Home/DeletePhanQuyen', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var content = xhr.responseText;
+                    var json_ct = JSON.parse(content);
+                    if (json_ct.Data.status == "OK") {
+                        $('#tr_' + ma).remove();
+                    }
+                    else {
+                        alert('Lỗi: ' + json_ct.Data.message)
+                    }
+
+                }
+            }
+            xhr.send(form);
+        }
+    }
+</script>
