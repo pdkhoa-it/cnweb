@@ -1,7 +1,0 @@
-E:\MVC\WebNoiThat\Database\bin\Debug\Database.dll.config
-E:\MVC\WebNoiThat\Database\bin\Debug\Database.dll
-E:\MVC\WebNoiThat\Database\bin\Debug\Database.pdb
-E:\MVC\WebNoiThat\Database\obj\Debug\Database.csproj.CoreCompileInputs.cache
-E:\MVC\WebNoiThat\Database\obj\Debug\Database.dll
-E:\MVC\WebNoiThat\Database\obj\Debug\Database.pdb
-E:\MVC\WebNoiThat\Database\obj\Debug\Database.csprojAssemblyReference.cache

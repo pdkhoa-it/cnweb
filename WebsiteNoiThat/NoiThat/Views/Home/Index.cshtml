@@ -1,0 +1,154 @@
+﻿@model List<NoiThat.Models.PhanQuyen>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<table border="1" cellspacing="0" id="List_PhanQuyen">
+    <tr>
+        <td>Tên</td>
+        <td>Action</td>
+    </tr>
+
+    @foreach (NoiThat.Models.PhanQuyen item in Model)
+    {
+        <tr id="tr_@item.Ma">
+            <td class="ten ">@item.Ten</td>
+            <td id="but">
+                <a href="javascript:Delete('@item.Ma','@item.Ten')" class="btn btn-primary">Xóa</a>
+                <a href="javascript:BeginEdit('@item.Ma','@item.Ten')" class="btn btn-info">Sửa</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<h2 id="Title">Thêm phân quyền</h2>
+<input type="text" id="txtTenQuyen" placeholder="Tên quyền" />
+<br />
+<a class="btn btn-danger" onclick="AddOrEdit()">Lưu</a>
+
+<script>
+
+    function AddOrEdit() {
+        if (EditMode) {
+            SaveEdit();
+        }
+        else {
+            AddPhanQuyen();
+        }
+    }
+
+    var EditMode = false;
+    var EditID = -1;
+
+    function AddPhanQuyen() {
+        var tenquyen = $('#txtTenQuyen').val();
+
+        if (tenquyen == "") {
+            $('#txtTenQuyen').css('border-color', 'red');
+            alert("Vui lòng nhập tên quyền!");
+        }
+        var form = new FormData();
+        form.append("tenquyen", tenquyen);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'https://localhost:44322/Home/AddPhanQuyen', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var content = xhr.responseText;
+                var json_ct = JSON.parse(content);
+                if (json_ct.Data.status == "OK") {
+
+                    var tr = '<tr><td>' + tenquyen + '</td></tr>';
+                    $('#List_PhanQuyen').append(tr);
+
+                    alert("Thêm thành công!");
+
+                    $('#txtTenQuyen').val('');
+                }
+
+                else {
+                    alert(json_ct.Data.message);
+                    $('#txtTenQuyen').css('border-color', 'red');
+                }
+            }
+        }
+
+        xhr.send(form);
+    }
+
+    function Delete(maquyen, tenquyen) {
+        if (confirm('Bạn có chắc là xóa :' + tenquyen)) {
+            var form = new FormData();
+            form.append('maquyen', maquyen);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", 'https://localhost:44322/Home/DeletePhanQuyen', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var content = xhr.responseText;
+                    var json_ct = JSON.parse(content);
+                    if (json_ct.Data.status == "OK") {
+                        $('#tr_' + maquyen).remove();
+                        alert("Xóa thành công!");
+                    }
+                    else {
+                        alert('Lỗi: ' + json_ct.Data.message)
+                    }
+                }
+            }
+            xhr.send(form);
+        }
+    }
+
+    function BeginEdit(maquyen, tenquyen) {
+        EditMode = true;
+        $('#Title').html('Sửa');
+
+        EditID = maquyen;
+        $('#txtTenQuyen').val(tenquyen);
+
+    }
+
+    function SaveEdit() {
+        var tenquyen = $('#txtTenQuyen').val();
+
+        if (tenquyen == "") {
+            $('#txtTenQuyen').css('border-color', 'red');
+            alert("Vui lòng nhập tên quyền!");
+        }
+        var form = new FormData();
+        form.append("maquyen", EditID);
+        form.append("tenquyen", tenquyen);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'https://localhost:44322/Home/EditPhanQuyen', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var content = xhr.responseText;
+                var json_ct = JSON.parse(content);
+                if (json_ct.Data.status == "OK") {
+
+                    $('#tr_' + EditID + ' .ten').html(tenquyen);
+
+                    alert("Cập nhật thành công!");
+
+                    $('#txtTenQuyen').val('');
+
+                    EditMode = false;
+                    EditID = -1;
+                    $('#Title').html('Thêm Phân Quyền');
+
+                }
+
+                else {
+                    alert(json_ct.Data.message);
+                    $('#txtTenQuyen').css('border-color', 'red');
+                }
+            }
+        }
+
+        xhr.send(form);
+
+    }
+
+</script>
