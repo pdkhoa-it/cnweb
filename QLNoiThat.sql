@@ -1,6 +1,7 @@
 ﻿use master
 go 
 
+
 create database QLNoiThat 
 go
 
@@ -9,7 +10,7 @@ go
 
 create table PhanQuyen
 (
-	Ma int identity primary key,
+	Ma varchar(10) primary key,
 	Ten nvarchar(50)
 );
 go
@@ -30,7 +31,7 @@ create table TaiKhoan
 	GioiTinh bit,
 	DiaChi nvarchar(100),
 	Sdt varchar(20),
-	MaQuyen int,
+	MaQuyen varchar(10),
 	
 	foreign key(MaQuyen) references PhanQuyen(Ma)
 );

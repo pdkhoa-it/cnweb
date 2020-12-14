@@ -42,9 +42,12 @@ namespace NoiThat.Controllers
                 db.AddObject(p);
                 db.Save();
 
+                int ma = db.Get_ID_PhanQuyen(ten);
+
                 js.Data = new
                 {
-                    status ="OK"
+                    status = "OK",
+                    message = ma
                 };
             }                
 

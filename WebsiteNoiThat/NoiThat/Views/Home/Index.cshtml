@@ -6,17 +6,20 @@
 
 <table border="1" cellspacing="0" id="List_PhanQuyen">
     <tr>
-        <td>Tên</td>
-        <td>Action</td>
+        <th>Tên</th>
+        <th>Sửa</th>
+        <th>Xóa</th>
     </tr>
 
     @foreach (NoiThat.Models.PhanQuyen item in Model)
     {
         <tr id="tr_@item.Ma">
-            <td class="ten ">@item.Ten</td>
-            <td id="but">
+            <td class="ten">@item.Ten</td>
+            <td>
+                <a id="edit" href="javascript:BeginEdit('@item.Ma','@item.Ten')" class="btn btn-info">Sửa</a>
+            </td>
+            <td>
                 <a href="javascript:Delete('@item.Ma','@item.Ten')" class="btn btn-primary">Xóa</a>
-                <a href="javascript:BeginEdit('@item.Ma','@item.Ten')" class="btn btn-info">Sửa</a>
             </td>
         </tr>
     }
@@ -44,10 +47,6 @@
     function AddPhanQuyen() {
         var tenquyen = $('#txtTenQuyen').val();
 
-        if (tenquyen == "") {
-            $('#txtTenQuyen').css('border-color', 'red');
-            alert("Vui lòng nhập tên quyền!");
-        }
         var form = new FormData();
         form.append("tenquyen", tenquyen);
 
@@ -59,7 +58,19 @@
                 var json_ct = JSON.parse(content);
                 if (json_ct.Data.status == "OK") {
 
-                    var tr = '<tr><td>' + tenquyen + '</td></tr>';
+                    //var tr = '<tr><td>' + tenquyen + '</td></tr>';
+                    var tr = '<tr id="tr_' + json_ct.Data.message + '">';
+
+                    tr += '<td class="ten">' + tenquyen + ' </td>';
+
+                    tr += '<td><a href = "javascript:BeginEdit(\'' + json_ct.Data.message + '\',\'' + tenquyen + '\')" class="btn btn-info">Sửa</a></td>';
+
+                    tr += '<td><a href = "javascript:Delete(\'' + json_ct.Data.message + '\',\'' + tenquyen + '\')" class="btn btn-primary">Xóa</a></td>';
+                    
+                    tr += '</td>';
+
+                    tr += '</tr>';
+
                     $('#List_PhanQuyen').append(tr);
 
                     alert("Thêm thành công!");
@@ -112,10 +123,6 @@
     function SaveEdit() {
         var tenquyen = $('#txtTenQuyen').val();
 
-        if (tenquyen == "") {
-            $('#txtTenQuyen').css('border-color', 'red');
-            alert("Vui lòng nhập tên quyền!");
-        }
         var form = new FormData();
         form.append("maquyen", EditID);
         form.append("tenquyen", tenquyen);
@@ -130,6 +137,8 @@
 
                     $('#tr_' + EditID + ' .ten').html(tenquyen);
 
+                    $('#tr_' + EditID + ' #edit').attr('href', 'javascript:BeginEdit(\'' + EditID + '\',\'' + tenquyen + '\')');
+
                     alert("Cập nhật thành công!");
 
                     $('#txtTenQuyen').val('');
@@ -137,7 +146,6 @@
                     EditMode = false;
                     EditID = -1;
                     $('#Title').html('Thêm Phân Quyền');
-
                 }
 
                 else {
@@ -146,9 +154,7 @@
                 }
             }
         }
-
         xhr.send(form);
-
     }
 
 </script>

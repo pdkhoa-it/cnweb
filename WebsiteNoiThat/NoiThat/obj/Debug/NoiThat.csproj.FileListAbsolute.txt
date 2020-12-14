@@ -57,3 +57,4 @@ E:\MVC\WebsiteNoiThat\NoiThat\obj\Debug\NoiThat.csproj.CoreCompileInputs.cache
 E:\MVC\WebsiteNoiThat\NoiThat\obj\Debug\NoiThat.csproj.CopyComplete
 E:\MVC\WebsiteNoiThat\NoiThat\obj\Debug\NoiThat.dll
 E:\MVC\WebsiteNoiThat\NoiThat\obj\Debug\NoiThat.pdb
+E:\MVC\WebsiteNoiThat\NoiThat\obj\Debug\NoiThat.csprojAssemblyReference.cache

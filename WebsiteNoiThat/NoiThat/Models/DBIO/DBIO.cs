@@ -38,5 +38,11 @@ namespace NoiThat.Models.DBIO
         {
             return mydb.PhanQuyens.Where(p => p.Ma == ma).FirstOrDefault();
         }
+
+        public int Get_ID_PhanQuyen(string ten)
+        {
+            PhanQuyen p = mydb.PhanQuyens.Where(c => c.Ten == ten).FirstOrDefault();
+            return p.Ma;
+        }
     }
 }
