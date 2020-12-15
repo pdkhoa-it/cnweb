@@ -1,6 +1,7 @@
 ﻿use master
 go 
 
+drop database QLNoiThat
 
 create database QLNoiThat 
 go
@@ -10,7 +11,7 @@ go
 
 create table PhanQuyen
 (
-	Ma varchar(10) primary key,
+	Ma int identity primary key,
 	Ten nvarchar(50)
 );
 go
@@ -25,20 +26,23 @@ create table TaiKhoan
 	TenDangNhap varchar(50),
 	MatKhau varchar(max),
 	Salt int,
+
 	Email varchar(100),
 	HoTen nvarchar(50),
 	NgaySinh datetime,
-	GioiTinh bit,
+	GioiTinh nvarchar(3),
 	DiaChi nvarchar(100),
 	Sdt varchar(20),
-	MaQuyen varchar(10),
+	MaQuyen int,
 	
 	foreign key(MaQuyen) references PhanQuyen(Ma)
 );
 go
+select * from TaiKhoan
 
-insert into TaiKhoan(TenDangNhap,MatKhau,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 
-	values('pdk','123','pdk@gmail.com',N'Phan Đăng Khoa','8/12/1999',0,N'An Giang','0123456789','AD');
+
+insert into TaiKhoan(TenDangNhap,MatKhau,Salt,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 
+	values('pdk','123',1,'pdk@gmail.com',N'Phan Đăng Khoa','8/12/1999',N'Nam',N'An Giang','0123456789',1);
 insert into TaiKhoan(TenDangNhap,MatKhau,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 
 	values('lbh','123','lbh@gmail.com',N'Lâm Bách Hợp','6/11/1999',0,N'An Giang','0213452667','NV');
 insert into TaiKhoan(TenDangNhap,MatKhau,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 

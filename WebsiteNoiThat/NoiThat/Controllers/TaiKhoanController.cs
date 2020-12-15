@@ -1,5 +1,6 @@
 ﻿using NoiThat.Models;
 using NoiThat.Models.DBIO;
+using NoiThat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,16 @@ using System.Web.Mvc;
 
 namespace NoiThat.Controllers
 {
-    public class HomeController : Controller
+    public class TaiKhoanController : Controller
     {
+        // GET: TaiKhoan
         public ActionResult Index()
         {
-            return View();
+            DBIO db = new DBIO();
+            List<TaiKhoanViewModel> list = db.GetList_TaiKhoan();
+            return View(list);
         }
 
+        
     }
 }

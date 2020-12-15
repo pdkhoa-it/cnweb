@@ -32,7 +32,8 @@ namespace NoiThat.Models
 
         public DateTime? NgaySinh { get; set; }
 
-        public bool? GioiTinh { get; set; }
+        [StringLength(3)]
+        public string GioiTinh { get; set; }
 
         [StringLength(100)]
         public string DiaChi { get; set; }

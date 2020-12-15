@@ -1,0 +1,49 @@
+﻿@model List<NoiThat.ViewModels.TaiKhoanViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table border="1" cellspacing="0">
+    <tr>
+        <th>Tên đăng nhập</th>
+        <th>Email</th>
+        <th>Họ và tên</th>
+        <th>Ngày sinh</th>
+        <th>Giới tính</th>
+        <th>Địa chỉ</th>
+        <th>Số điện thoại</th>
+        <th>Quyền</th>
+    </tr>
+
+    @foreach (NoiThat.ViewModels.TaiKhoanViewModel item in Model)
+    {
+        <tr id="tr_@item.ID">
+            <td class="tendangnhap">@item.TenDangNhap</td>
+            <td class="email">@item.Email</td>
+            <td class="hoten">@item.HoTen</td>
+            <td class="ngaysinh">@Html.DisplayFor(Model=>item.NgaySinh)</td>
+            <td class="gioitinh">@item.GioiTinh</td>
+            <td class="diachi">@item.DiaChi</td>
+            <td class="sdt">@item.Sdt</td>
+            <td class="tenquyen">@item.TenQuyen</td>
+        </tr>
+    }
+
+</table>
+
+
+<h2>Thêm tài khoản</h2>
+<input type="text" id="txtTDN" placeholder="Tên đăng nhập" /><br />
+<input type="password" id="txtMK" placeholder="Mật khẩu" /><br />
+<input type="password" id="txtMK2" placeholder="Nhập lại mật khẩu" /><br />
+<input type="email" id="txtEmail" placeholder="Email" /><br />
+<input type="text" id="txtHoTen" placeholder="Họ và tên" /><br />
+<input type="text" id="txtNgaySinh" placeholder="Ngày sinh" /><br />
+<input type="radio" id="Nam" name="GT"/><label>Nam</label>
+<input type="radio" id="Nu" name="GT"/><label>Nữ</label><br />
+<input type="text" id="txtDiaChi" placeholder="Địa chỉ" /><br />
+<input type="text" id="txtSDT" placeholder="Số điện thoại" /><br />
+
+<a class="btn btn-danger" onclick="AddTaiKhoan()">Lưu</a>
