@@ -1,7 +1,6 @@
-﻿use master
+use master
 go 
 
-drop database QLNoiThat
 
 create database QLNoiThat 
 go
@@ -29,7 +28,7 @@ create table TaiKhoan
 
 	Email varchar(100),
 	HoTen nvarchar(50),
-	NgaySinh datetime,
+	NgaySinh varchar(20) ,
 	GioiTinh nvarchar(3),
 	DiaChi nvarchar(100),
 	Sdt varchar(20),
@@ -38,16 +37,6 @@ create table TaiKhoan
 	foreign key(MaQuyen) references PhanQuyen(Ma)
 );
 go
-select * from TaiKhoan
-
-
-insert into TaiKhoan(TenDangNhap,MatKhau,Salt,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 
-	values('pdk','123',1,'pdk@gmail.com',N'Phan Đăng Khoa','8/12/1999',N'Nam',N'An Giang','0123456789',1);
-insert into TaiKhoan(TenDangNhap,MatKhau,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 
-	values('lbh','123','lbh@gmail.com',N'Lâm Bách Hợp','6/11/1999',0,N'An Giang','0213452667','NV');
-insert into TaiKhoan(TenDangNhap,MatKhau,Email,HoTen,NgaySinh,GioiTinh,DiaChi,Sdt,MaQuyen) 
-	values('dnmuyen','123','dnmuyen@gmail.com',N'Đinh Ngọc Minh Uyên','9/16/1999',1,N'An Giang','0123456789','KH');
-
 
 create table NhomSanPham
 (
@@ -55,10 +44,6 @@ create table NhomSanPham
 	Ten nvarchar(50)
 );
 go
-
-insert into NhomSanPham(Ten) values(N'Bàn');
-insert into NhomSanPham(Ten) values(N'Ghế');
-
 
 create table DanhMucSanPham
 (
@@ -69,11 +54,6 @@ create table DanhMucSanPham
 	foreign key(IDNhomSP) references NhomSanPham(ID)
 );
 go
-
-insert into DanhMucSanPham(IDNhomSP,Ten) values(1,N'Bàn Cao');
-insert into DanhMucSanPham(IDNhomSP,Ten) values(1,N'Bàn Thấp');
-insert into DanhMucSanPham(IDNhomSP,Ten) values(2,N'Ghế SoFa');
-insert into DanhMucSanPham(IDNhomSP,Ten) values(2,N'Ghế Gỗ');
 
 create table NhaCungCap
 (
@@ -88,40 +68,29 @@ create table NhaCungCap
 );
 go
 
-insert into NhaCungCap(Ten,DiaChi,SoDienThoai,Email,MaSoThue,SoTaiKhoan,NguoiDaiDien) values(N'Nhà Cung Cấp 1',N'An Giang','123408456','nhtung@gmail.com','1602135476','0151000574815','Nguyễn Hoàng Tùng');
 
 create table SanPham
 (
 	ID int identity primary key,
 	Ten nvarchar(100) ,
+	ImageSP varchar(100),
+	MoTa nvarchar(500),
 	IDNCC int,
 	IDDanhMucSP int,
-	MoTa nvarchar(500)
 
 	foreign key(IDNCC) references NhaCungCap(ID),
 	foreign key(IDDanhMucSP) references DanhMucSanPham(ID)
 );
 go
 
-create table Hinh
-(
-	ID int identity primary key,
-	IDSanPham int,
-	DuongDan nvarchar(300)
-
-	foreign key(IDSanPham) references SanPham(ID)
-);
-go
-
-
 create table DonHang
 (
 	ID int identity primary key,
 	IDTaiKhoan int,
 	HinhThucThanhToan nvarchar(50),
-	NgayThang datetime,
+	NgayThang varchar(20),
 	DiaChiGiaoHang nvarchar(100),
-	TinhTrangThanhToan bit,
+	TinhTrangThanhToan tinyint,
 	TinhTrangGiaoHang tinyint
 
 	foreign key(IDTaiKhoan) references TaiKhoan(ID)
@@ -141,5 +110,3 @@ create table ChiTietDonHang
 	foreign key(IDDonhang) references DonHang(ID)
 );
 go
-
-
