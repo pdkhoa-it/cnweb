@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebsiteNoiThat.Models.NhomSanPham>
+
+@{
+    ViewBag.Title = "ViewNhom";
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("AddOrEdit_Nhom", "Nhom_DanhMuc", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success" }))
+{
+    <div class="form-group">
+        <label class="col-form-label">Tên nhóm</label>
+        <input type="text" hidden name="id" id="txtIdNhom"/>
+        <input type="text" class="form-control w-25" name="ten" id="txtTenNhom" />
+        <input type="submit" class="btn btn-success mt-3" id="btnSubmit" value="Thêm" />
+    </div>
+}
+
+
+<table class="table" id="tableNhom">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ten)
+                </td>
+                <td class="float-right">
+                    <a data-toggle="modal" data-target="#staticBackdrop" onclick="BeginEdit('@item.ID', '@item.Ten')" class="btn btn-primary">Sửa</a>
+                    <a onclick="Delete('@item.ID','@item.Ten')" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<script>
+
+
+    function Success(data) {
+        alert(data);
+        location.reload();
+    }
+
+    function BeginEdit(id, ten) {
+        $('#txtTenNhom').val(ten);
+        $('#txtIdNhom').val(id);
+        $('#btnSubmit').val('Lưu');
+    }
+
+    function Delete(id, ten) {
+        if (confirm("Bạn có muốn xóa nhóm: " + ten)) {
+            $.ajax({
+                type: 'POST',
+                url: '/Nhom_DanhMuc/Delete_Nhom',
+                data: JSON.stringify({
+                    id: id
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            })
+        }
+    }
+
+</script>

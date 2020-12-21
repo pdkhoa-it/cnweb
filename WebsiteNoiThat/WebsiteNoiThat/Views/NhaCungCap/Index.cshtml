@@ -1,0 +1,192 @@
+﻿@model IEnumerable<WebsiteNoiThat.Models.NhaCungCap>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+    Thêm nhà cung cấp
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Thêm nhà cung cấp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="RefreshModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddOrEdit", "NhaCungCap", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success" }))
+                {
+                    <input type="text" name="id" id="txtId" />
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="ten" id="txtTen" placeholder="Tên nhà cung cấp" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="diachi" id="txtDiaChi" placeholder="Địa chỉ" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="sodienthoai" id="txtSDT" placeholder="Số điện thoại" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" id="txtEmail" placeholder="Email" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="masothue" id="txtMST" placeholder="Mã số thuế" />
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="sotaikhoan" id="txtSTK" placeholder="Số tài khoản" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="nguoidaidien" id="txtNDD" placeholder="Người đại diện" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success float-right" id="btnSubmit" value="Thêm" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table" id="tableNCC">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiaChi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoDienThoai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaSoThue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoTaiKhoan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NguoiDaiDien)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaSoThue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoTaiKhoan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NguoiDaiDien)
+                </td>
+                <td class="float-right">
+                    <a data-toggle="modal" data-target="#staticBackdrop" onclick="BeginEdit('@item.ID', '@item.Ten', '@item.DiaChi','@item.SoDienThoai','@item.Email','@item.MaSoThue','@item.SoTaiKhoan','@item.NguoiDaiDien')" class="btn btn-primary">Sửa</a>
+                    <a onclick="Delete('@item.ID','@item.Ten')" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section Scripts{
+    <script>
+
+        function Success(data) {
+            alert(data);
+            location.reload();
+        }
+
+        $.noConflict();
+        $('#tableNCC').DataTable({ pageLength: 5, lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]] });
+
+        var EditMode = false;
+
+        function BeginEdit(id, ten, diachi, sdt, email, mst, stk, ndd) {
+            $('#staticBackdropLabel').html('Sửa thông tin nhà cung cấp');
+            $('#txtTen').val(ten);
+            $('#txtDiaChi').val(diachi);
+            $('#txtSDT').val(sdt);
+            $('#txtEmail').val(email);
+            $('#txtMST').val(mst);
+            $('#txtSTK').val(stk);
+            $('#txtNDD').val(ndd);
+
+            $('#btnSubmit').val('Lưu');
+
+            $('#txtId').val(id);
+
+            EditMode = true;
+        }
+
+        function Delete(id, ten) {
+            if (confirm("Bạn có muốn xóa thông của " + ten)) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/NhaCungCap/Delete',
+                    data: JSON.stringify({
+                        id: id
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload();
+                    }
+                });
+            }
+        }
+
+
+
+        function RefreshModal() {
+            if (EditMode == true) {
+                EditMode = false;
+
+                $('#staticBackdropLabel').html('Thêm nhà cung cấp');
+
+                $('#btnSubmit').html('Thêm');
+            }
+            $('#txtId').val('');
+            $('#txtTen').val('');
+            $('#txtSDT').val('');
+            $('#txtDiaChi').val('');
+            $('#txtSTK').val('');
+            $('#txtEmail').val('');
+            $('#txtMST').val('');
+            $('#txtNDD').val('');
+        }
+
+    </script>
+}
+
+
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

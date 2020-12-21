@@ -1,0 +1,110 @@
+﻿@model IEnumerable<WebsiteNoiThat.Models.PhanQuyen>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    @using (Ajax.BeginForm("AddOrEdit", "PhanQuyen", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success"}))
+    {
+        <div class="form-group">
+            <label class="col-form-label">Tên quyền</label>
+            <input type="text" class="form-control w-25" name="ten" id="txtTenQuyen" />
+            <input type="submit" class="btn btn-success mt-3" value="Thêm" />
+        </div>
+    }
+
+    <table class="table" id="tablePQ">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ten)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ten)
+                    </td>
+                    <td class="float-right">
+                        <a data-toggle="modal" data-target="#staticBackdrop" onclick="BeginEdit('@item.Ma','@item.Ten')" class="btn btn-primary">Sửa</a>
+                        <a onclick="Delete('@item.Ma','@item.Ten')" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Sửa tên quyền</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddOrEdit", "PhanQuyen", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success"}))
+                {
+                    <div class="form-group">
+                        <label class="col-form-label">Tên quyền</label>
+                        <input type="text" hidden name="ma" id="txtId"/>
+                        <input type="text" class="form-control" name="ten" id="txtTenQuyen2" />
+                        <input type="submit" class="btn btn-success float-right mt-3" value="Lưu" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            $.noConflict();
+            $('#tablePQ').DataTable({ pageLength: 5, lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]] });
+
+        });
+
+        function Success(data) {
+            alert(data);
+            location.reload();
+        }
+
+        function BeginEdit(ma, ten) {
+            $('#txtTenQuyen2').val(ten);
+            $('#txtId').val(ma);
+        }
+
+        function Delete(ma, ten) {
+            if (confirm("Bạn có muốn xóa: " + ten)) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/PhanQuyen/Delete',
+                    data: JSON.stringify({
+                        id: ma
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload();
+                    }
+                })
+            }
+        }
+    </script>
+}
+
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

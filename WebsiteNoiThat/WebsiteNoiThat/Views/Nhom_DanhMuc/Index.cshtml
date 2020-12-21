@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#DanhMuc">Danh mục</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Nhom">Nhóm</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="DanhMuc" class="container tab-pane active">@Html.Action("ViewDanhMuc")</div>
+        <div id="Nhom" class="container tab-pane fade">@Html.Action("ViewNhom")</div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $.noConflict();
+        $('#tableNhom').DataTable({ pageLength: 5, lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]] });
+        $('#tableDM').DataTable({ pageLength: 5, lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]] });
+    </script>
+}
+
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

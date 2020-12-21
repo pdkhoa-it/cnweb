@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WebsiteNoiThat.ViewModels.DanhMucSanPhamViewModel>
+
+@{
+    ViewBag.Title = "ViewDanhMuc";
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("AddOrEdit_DM", "Nhom_DanhMuc", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success"}))
+{
+    <div class="form-group">
+        <label class="col-form-label">Tên danh mục</label>
+        <input type="text" hidden name="id" id="txtIdDM" />
+        <input type="text" class="form-control w-25" name="ten" id="txtTenDM" />
+        @Html.DropDownList("idnhomsp", ViewBag.listNhom as SelectList, "Chọn nhóm cho danh mục", new { @class = "form-control w-25 mt-3" })
+        <input type="submit" class="btn btn-success mt-3" value="Thêm" />
+    </div>
+}
+
+
+<table class="table" id="tableDM">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenNhomSP)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenNhomSP)
+                </td>
+                <td class="float-right">
+                    <a data-toggle="modal" data-target="#staticBackdrop2" onclick="BeginEdit2('@item.ID', '@item.Ten','@item.NhomSP_ID')" class="btn btn-primary">Sửa</a>
+                    <a onclick="Delete2('@item.ID','@item.Ten')" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script>
+
+    function Success(data) {
+        alert(data);
+        location.reload();
+    }
+
+    function BeginEdit2(id, ten, nhomsp_id) {
+        $('#txtTenDM').val(ten);
+        $('#idnhomsp').val(nhomsp_id);
+        $('#txtIdDM').val(id);
+    }
+
+    function Delete2(id, ten) {
+        if (confirm("Bạn có muốn xóa danh mục: " + ten)) {
+            $.ajax({
+                type: 'POST',
+                url: '/Nhom_DanhMuc/Delete_DM',
+                data: JSON.stringify({
+                    id: id
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            })
+        }
+    }
+
+</script>

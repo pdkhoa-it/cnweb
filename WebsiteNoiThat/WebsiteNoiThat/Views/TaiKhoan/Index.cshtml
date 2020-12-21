@@ -1,0 +1,334 @@
+﻿@model IEnumerable<WebsiteNoiThat.ViewModels.TaiKhoanViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+    Thêm tài khoản
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Thêm tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="RefreshModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="txtHoTen" placeholder="Họ và tên" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="txtTDN" placeholder="Tên đăng nhập" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="txtMK1" placeholder="Mật khẩu" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="txtMK2" placeholder="Xác nhận mật khẩu" />
+                </div>
+                <div class="form-group">
+                    <select class="form-control"  id="GioiTinh">
+                        <option value="">Giới tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="txtSDT" placeholder="Số điện thoại" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="txtNgaySinh" placeholder="Ngày sinh" />
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="txtEmail" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="txtDiaChi" placeholder="Địa chỉ" />
+                </div>
+                <div class="form-group">
+                    @Html.DropDownList("selectQuyen", ViewBag.listQuyen as SelectList, "Chọn quyền cho tài khoản", new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success float-right" id="btnSubmit" onclick="Submit()" value="Thêm" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changePass" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="changePassLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePassLabel">Đổi mật khẩu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="password" class="form-control" name="mk" id="txtMK" placeholder="Mật khẩu cũ" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="mk1" id="txtMK11" placeholder="Mật khẩu mới" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="mk2" id="txtMK22" placeholder="Xác nhận mật khẩu mới" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success float-right" id="btnSubmitMK" onclick="SubmitMK()" value="Lưu" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table" id="tableTK">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenDangNhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GioiTinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sdt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiaChi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenQuyen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenDangNhap)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GioiTinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sdt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenQuyen)
+                </td>
+                <td class="float-right">
+                    <a data-toggle="modal" data-target="#staticBackdrop" onclick="BeginEdit('@item.ID', '@item.TenDangNhap', '@item.HoTen','@item.Email','@item.NgaySinh','@item.GioiTinh','@item.DiaChi','@item.Sdt','@item.MaQuyen')" class="btn btn-primary">Sửa</a>
+                    <a data-toggle="modal" data-target="#changePass" onclick="ChangePass('@item.ID','@item.TenDangNhap')" class="btn btn-dark">Đổi Mật khẩu</a>
+                    <a onclick="Delete('@item.ID','@item.TenDangNhap')" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+
+        var EditID = 0;
+        var EditMode = false;
+        var ChangePassID = 0;
+
+        $.noConflict();
+        $('#tableTK').DataTable({ pageLength: 5, lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]] });
+        $('#txtNgaySinh').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"
+        });
+
+        function BeginEdit(id, tdn, hoten, email, ngaysinh, gioitinh, diachi, sdt, maquyen) {
+
+            $('#txtMK1').hide();
+            $('#txtMK2').hide();
+            $('#txtTDN').hide();
+
+            $('#txtHoTen').val(hoten);
+            $('#txtEmail').val(email);
+            $('#txtNgaySinh').val(ngaysinh);
+            $('#GioiTinh').val(gioitinh);
+            $('#txtDiaChi').val(diachi);
+            $('#txtSDT').val(sdt);
+            $('#selectQuyen').val(maquyen);
+
+            $('#btnSubmit').val('Lưu');
+            $('#staticBackdropLabel').html('Sửa thông tin tài khoản '+tdn);
+
+            EditID = id;
+            EditMode = true;
+        }
+
+        function Submit() {
+            if ($('#txtMK1').val() == $('#txtMK2').val()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/TaiKhoan/AddOrEdit',
+                    data: JSON.stringify({
+                        tk: {
+                            id: EditID,
+                            tendangnhap: $('#txtTDN').val(),
+                            matkhau: $('#txtMK1').val(),
+                            hoten: $('#txtHoTen').val(),
+                            ngaysinh: $('#txtNgaySinh').val(),
+                            sdt: $('#txtSDT').val(),
+                            diachi: $('#txtDiaChi').val(),
+                            email: $('#txtEmail').val(),
+                            gioitinh: $('#GioiTinh Option:Selected').val(),
+                            maquyen: $('#selectQuyen Option:Selected').val()
+                        }
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+
+                        if (EditMode) {
+                            EditID = 0;
+                            EditMode = false;
+                        }
+                        location.reload();
+                    }
+                });
+            }
+            else {
+                alert("Xác nhận mật khẩu không chính xác!");
+                $('#txtMK1').val('');
+                $('#txtMK2').val('');
+                $('#txtMK1').focus();
+            }
+        }
+
+        function Delete(id, tdn) {
+            if (confirm("Bạn có muốn xóa tài khoản: " + tdn)) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/TaiKhoan/DeleteTaiKhoan',
+                    data: JSON.stringify({
+                        id: id
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                        location.reload();
+                    }
+                });
+            }
+        }
+
+        function ChangePass(id, tdn) {
+            $('#changePassLabel').html('Đổi mật khẩu của tài khoản ' + tdn);
+            ChangePassID = id;
+        }
+
+        function SubmitMK() {
+
+            $.ajax({
+                type: 'POST',
+                url: '/TaiKhoan/CheckPass',
+                data: JSON.stringify({
+                    id: ChangePassID, mk: $('#txtMK').val()
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "OK") {
+                        if ($('#txtMK11').val() != $('#txtMK22').val()) {
+                            alert("Xác nhận mật khẩu không chính xác!");
+                            $('#txtMK').val('');
+                            $('#txtMK11').val('');
+                            $('#txtMK22').val('');
+                            $('#txtMK').focus();
+                        }
+                        else {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/TaiKhoan/ChangePass',
+                                data: JSON.stringify({
+                                    id: ChangePassID, mk: $('#txtMK11').val()
+                                }),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (data) {
+                                    alert(data);
+
+                                    location.reload();
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        alert("Mật khẩu cũ không chính xác!");
+                        $('#txtMK').val('');
+                        $('#txtMK11').val('');
+                        $('#txtMK22').val('');
+                        $('#txtMK').focus();
+                    }
+                }
+            });
+        }
+
+        function RefreshModal() {
+            if (EditMode == true) {
+                EditID = 0;
+                EditMode = false;
+
+                $('#staticBackdropLabel').html('Thêm tài khoản');
+
+                $('#btnSubmit').html('Thêm');
+            }
+
+            $('#txtTDN').val('');
+            $('#txtHoTen').val('');
+            $('#txtMK1').show();
+            $('#txtMK2').show();
+            $('#txtSDT').val('');
+            $('#txtDiaChi').val('');
+            $('#txtNgaySinh').val('');
+            $('#txtEmail').val('');
+            $('#GioiTinh').val('');
+            $('#selectQuyen').val(null);
+        }
+
+    </script>
+}
+
+
+
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
