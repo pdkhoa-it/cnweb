@@ -4,8 +4,21 @@
     ViewBag.Title = "Index";
 }
 
+
 <div class="container">
-    @using (Ajax.BeginForm("AddOrEdit", "PhanQuyen", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success"}))
+
+        <div class="alert alert-success" id="alert" role="alert">
+            <div class="spinner-border text-success" id="spin" role="status">
+                <small class="sr-only">Loading...</small>
+            </div>
+            <label id="mess"></label> <a href="#" class="alert-link">Tải lại trang</a> để cập nhật thay đổi.
+            <button type="button" class="close" id="Close" onclick="Close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+
+    @using (Ajax.BeginForm("AddOrEdit", "PhanQuyen", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success" }))
     {
         <div class="form-group">
             <label class="col-form-label">Tên quyền</label>
@@ -58,7 +71,7 @@
                         <label class="col-form-label">Tên quyền</label>
                         <input type="text" hidden name="ma" id="txtId"/>
                         <input type="text" class="form-control" name="ten" id="txtTenQuyen2" />
-                        <input type="submit" class="btn btn-success float-right mt-3" value="Lưu" />
+                        <input type="submit" onclick="CloseModal()" class="btn btn-success float-right mt-3" value="Lưu" />
                     </div>
                 }
             </div>
@@ -66,19 +79,38 @@
     </div>
 </div>
 
+
 @section Scripts{
     <script>
+
+        function Close() {
+            $('#alert').hide();
+        }
+
+        function CloseModal() {
+            $('#staticBackdrop').modal('hide');
+        }
 
         $(document).ready(function () {
 
             $.noConflict();
             $('#tablePQ').DataTable({ pageLength: 5, lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]] });
+            $('#alert').hide();
 
         });
 
         function Success(data) {
-            alert(data);
-            location.reload();
+            if (data.kq) {
+                $('#alert').removeClass('alert-danger').addClass('alert-success');
+                $('#spin').removeClass('spinner-grow text-danger').addClass('spinner-border text-success');
+            }
+            else {
+                $('#alert').removeClass('alert-success').addClass('alert-danger');
+                $('#spin').removeClass('spinner-border text-success').addClass('spinner-grow text-danger');
+            }
+
+            $('#alert').show();
+            $('#mess').html(data.message);
         }
 
         function BeginEdit(ma, ten) {
@@ -96,15 +128,10 @@
                     }),
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        alert(data);
-                        location.reload();
+                        Success(data);
                     }
                 })
             }
         }
     </script>
 }
-
-<script src="~/Scripts/jquery-3.5.1.js"></script>
-<script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

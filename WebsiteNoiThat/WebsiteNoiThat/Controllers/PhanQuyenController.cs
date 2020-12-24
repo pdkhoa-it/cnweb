@@ -25,39 +25,64 @@ namespace WebsiteNoiThat.Controllers
         }
 
         [HttpPost]
-        public string AddOrEdit(PhanQuyen p)
+        public JsonResult AddOrEdit(PhanQuyen p)
         {
             if (p.Ma == 0)
             {
-                using (DBNoiThat db = new DBNoiThat())
+                try
                 {
-                    db.PhanQuyens.Add(p);
-                    db.SaveChanges();
+                    using (DBNoiThat db = new DBNoiThat())
+                    {
+                        db.PhanQuyens.Add(p);
+                        db.SaveChanges();
+                    }
+                    return Json(new { kq = true, message = "Thêm thành công!" }, JsonRequestBehavior.AllowGet);
                 }
-                return "Thêm thành công!";
+                catch
+                {
+                    return Json(new { kq = false, message = "Không thể thêm dữ liệu!" }, JsonRequestBehavior.AllowGet);
+                }
+                
             }
             else
             {
-                using (DBNoiThat db = new DBNoiThat())
+                try
                 {
-                    PhanQuyen pp = db.PhanQuyens.Where(c => c.Ma == p.Ma).FirstOrDefault();
-                    pp.Ten = p.Ten;
-                    db.SaveChanges();
+                    using (DBNoiThat db = new DBNoiThat())
+                    {
+                        PhanQuyen pp = db.PhanQuyens.Where(c => c.Ma == p.Ma).FirstOrDefault();
+                        pp.Ten = p.Ten;
+                        db.SaveChanges();
+                    }
+                    return Json(new { kq = true, message = "Sửa thành công!" }, JsonRequestBehavior.AllowGet);
                 }
-                return "Sửa thành công!";
+                catch
+                {
+                    return Json(new { kq = false, message = "Bạn không thể sửa trường dữ liệu này!" }, JsonRequestBehavior.AllowGet);
+                }
+                
             }
         }
 
         [HttpPost]
-        public string Delete(int id)
+        public JsonResult Delete(int id)
         {
-            using (DBNoiThat db = new DBNoiThat())
+            try
             {
-                PhanQuyen p = db.PhanQuyens.Where(c => c.Ma == id).FirstOrDefault();
-                db.PhanQuyens.Remove(p);
-                db.SaveChanges();
+                using (DBNoiThat db = new DBNoiThat())
+                {
+                    PhanQuyen p = db.PhanQuyens.Where(c => c.Ma == id).FirstOrDefault();
+                    db.PhanQuyens.Remove(p);
+                    db.SaveChanges();
+                }
+
+
+                return Json(new {kq = true, message = "Xóa thành công!" }, JsonRequestBehavior.AllowGet);
             }
-            return "Xóa thành công!";
+            catch 
+            {
+                return Json(new {kq = false, message = "Bạn không thể xóa trường dữ liệu này!" }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
