@@ -1,7 +1,6 @@
 use master
 go 
 
-
 create database QLNoiThat 
 go
 
@@ -10,8 +9,8 @@ go
 
 create table PhanQuyen
 (
-	Ma int identity primary key,
-	Ten nvarchar(50)
+	ID int identity primary key,
+	Ten nvarchar(50) not null
 );
 go
 
@@ -19,37 +18,40 @@ insert into PhanQuyen values(N'Quản Trị Viên');
 insert into PhanQuyen values(N'Nhân Viên');
 insert into PhanQuyen values(N'Khách Hàng');
 
+select * from PhanQuyen
 create table TaiKhoan
 (
 	ID int identity primary key,
-	TenDangNhap varchar(50),
-	MatKhau varchar(max),
-	Salt int,
-
-	Email varchar(100),
-	HoTen nvarchar(50),
-	NgaySinh varchar(20) ,
-	GioiTinh nvarchar(3),
-	DiaChi nvarchar(100),
-	Sdt varchar(20),
-	MaQuyen int,
+	Email varchar(100) not null,
+	MatKhau varchar(max) not null,
+	XacNhanMatKhau varchar(max) not null,
+	Salt int not null,
+	HoTen nvarchar(50) not null,
+	NgaySinh varchar(20) not null,
+	GioiTinh nvarchar(3) not null,
+	DiaChi nvarchar(100) not null,
+	Sdt varchar(20) not null,
+	IDQuyen int not null,
 	
-	foreign key(MaQuyen) references PhanQuyen(Ma)
+	foreign key(IDQuyen) references PhanQuyen(ID)
 );
 go
 
 create table NhomSanPham
 (
 	ID int identity primary key,
-	Ten nvarchar(50)
+	Ten nvarchar(50) not null,
+	Ten_slug varchar(50) not null
 );
 go
+
 
 create table DanhMucSanPham
 (
 	ID int identity primary key,
-	IDNhomSP int,
-	Ten nvarchar(50),
+	IDNhomSP int not null,
+	Ten nvarchar(50) not null,
+	Ten_slug varchar(50) not null
 
 	foreign key(IDNhomSP) references NhomSanPham(ID)
 );
@@ -58,13 +60,13 @@ go
 create table NhaCungCap
 (
 	ID int identity primary key,
-	Ten nvarchar(100) ,
-	DiaChi nvarchar(100),
-	SoDienThoai nvarchar(20),
-	Email nvarchar(100),
-	MaSoThue nvarchar(100),
-	SoTaiKhoan nvarchar(100),
-	NguoiDaiDien nvarchar(100)
+	Ten nvarchar(100) not null,
+	DiaChi nvarchar(100) not null,
+	SoDienThoai nvarchar(20) not null,
+	Email nvarchar(100) not null,
+	MaSoThue nvarchar(100) not null,
+	SoTaiKhoan nvarchar(100) not null,
+	NguoiDaiDien nvarchar(100) not null
 );
 go
 
@@ -72,11 +74,12 @@ go
 create table SanPham
 (
 	ID int identity primary key,
-	Ten nvarchar(100) ,
-	ImageSP varchar(100),
-	MoTa nvarchar(500),
-	IDNCC int,
-	IDDanhMucSP int,
+	Ten nvarchar(100) not null,
+	Ten_slug varchar(100) not null,
+	ImgPath varchar(max) not null,
+	MoTa nvarchar(500) not null,
+	IDNCC int not null,
+	IDDanhMucSP int not null,
 
 	foreign key(IDNCC) references NhaCungCap(ID),
 	foreign key(IDDanhMucSP) references DanhMucSanPham(ID)
@@ -86,12 +89,12 @@ go
 create table DonHang
 (
 	ID int identity primary key,
-	IDTaiKhoan int,
-	HinhThucThanhToan nvarchar(50),
-	NgayThang varchar(20),
-	DiaChiGiaoHang nvarchar(100),
-	TinhTrangThanhToan tinyint,
-	TinhTrangGiaoHang tinyint
+	IDTaiKhoan int not null,
+	HinhThucThanhToan nvarchar(50) not null,
+	NgayThang varchar(20) not null,
+	DiaChiGiaoHang nvarchar(100) not null,
+	TinhTrangThanhToan tinyint not null,
+	TinhTrangGiaoHang tinyint not null
 
 	foreign key(IDTaiKhoan) references TaiKhoan(ID)
 );
@@ -100,11 +103,11 @@ go
 create table ChiTietDonHang
 (
 	ID int identity primary key,
-	IDSanPham int,
-	IDDonHang int,
-	SoLuong decimal,
-	DonGia decimal,
-	ThanhTien decimal default 0
+	IDSanPham int not null,
+	IDDonHang int not null,
+	SoLuong decimal not null,
+	DonGia decimal not null,
+	ThanhTien decimal default 0 not null
 
 	foreign key(IDSanPham) references SanPham(ID),
 	foreign key(IDDonhang) references DonHang(ID)
