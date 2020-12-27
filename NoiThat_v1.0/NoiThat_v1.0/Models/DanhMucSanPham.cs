@@ -1,4 +1,4 @@
-﻿namespace NoiThat_v1._0.Models
+namespace NoiThat_v1._0.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,10 +17,9 @@
 
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Phải chọn nhóm của danh mục!")]
         public int IDNhomSP { get; set; }
 
-        [Required(ErrorMessage ="Tên danh mục không được bỏ trống!")]
+        [Required]
         [StringLength(50)]
         public string Ten { get; set; }
 

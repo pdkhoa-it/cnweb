@@ -1,4 +1,4 @@
-﻿namespace NoiThat_v1._0.Models
+namespace NoiThat_v1._0.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,37 +17,37 @@
 
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Email không được bỏ trống!")]
+        [Required]
         [StringLength(100)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage ="Mật khẩu không được bỏ trống!")]
-        [MinLength(4,ErrorMessage ="Mật khẩu phải có ít nhất 4 ký tự!")]
+        [Required]
+        [StringLength(100)]
         public string MatKhau { get; set; }
 
-        [Required(ErrorMessage = "Xác nhận mật không được bỏ trống!")]
-        [Compare("MatKhau")]
+        [Required]
+        [StringLength(100)]
         public string XacNhanMatKhau { get; set; }
 
         public int Salt { get; set; }
 
-        [Required(ErrorMessage = "Họ và tên không được bỏ trống!")]
+        [Required]
         [StringLength(50)]
         public string HoTen { get; set; }
 
-        [Required(ErrorMessage = "Ngày sinh không được bỏ trống!")]
+        [Required]
         [StringLength(20)]
         public string NgaySinh { get; set; }
 
-        [Required(ErrorMessage = "Giới tính không được bỏ trống!")]
+        [Required]
         [StringLength(3)]
         public string GioiTinh { get; set; }
 
-        [Required(ErrorMessage = "Địa chỉ không được bỏ trống!")]
+        [Required]
         [StringLength(100)]
         public string DiaChi { get; set; }
 
-        [Required(ErrorMessage = "Số điện thoại không được bỏ trống!")]
+        [Required]
         [StringLength(20)]
         public string Sdt { get; set; }
 

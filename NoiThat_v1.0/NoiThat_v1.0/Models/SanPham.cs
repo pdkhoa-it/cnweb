@@ -5,6 +5,7 @@ namespace NoiThat_v1._0.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web;
 
     [Table("SanPham")]
     public partial class SanPham
@@ -29,7 +30,6 @@ namespace NoiThat_v1._0.Models
         public string ImgPath { get; set; }
 
         [Required]
-        [StringLength(500)]
         public string MoTa { get; set; }
 
         public int IDNCC { get; set; }
@@ -42,5 +42,9 @@ namespace NoiThat_v1._0.Models
         public virtual DanhMucSanPham DanhMucSanPham { get; set; }
 
         public virtual NhaCungCap NhaCungCap { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase ImgUpload { get; set; }
+
     }
 }

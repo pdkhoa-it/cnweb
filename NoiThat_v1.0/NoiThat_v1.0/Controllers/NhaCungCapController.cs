@@ -92,6 +92,7 @@ namespace NoiThat_v1._0.Controllers
                 }
             }
         }
+
         [HttpPost]
         public ActionResult Delete(int id)
         {

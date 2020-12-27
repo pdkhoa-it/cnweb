@@ -1,4 +1,4 @@
-﻿namespace NoiThat_v1._0.Models
+namespace NoiThat_v1._0.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@
 
         public int ID { get; set; }
 
-        [Required(ErrorMessage ="Tên nhóm không được bỏ trống!")]
+        [Required]
         [StringLength(50)]
         public string Ten { get; set; }
 

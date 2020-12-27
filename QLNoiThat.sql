@@ -86,6 +86,9 @@ create table SanPham
 );
 go
 
+select * from SanPham
+
+
 create table DonHang
 (
 	ID int identity primary key,

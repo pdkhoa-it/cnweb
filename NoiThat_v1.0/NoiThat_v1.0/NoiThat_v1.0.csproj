@@ -132,6 +132,7 @@
     <Compile Include="Controllers\NhaCungCapController.cs" />
     <Compile Include="Controllers\NhomSanPhamController.cs" />
     <Compile Include="Controllers\PhanQuyenController.cs" />
+    <Compile Include="Controllers\SanPhamController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,6 +151,7 @@
     <Compile Include="ViewModels\NhaCungCapViewModel.cs" />
     <Compile Include="ViewModels\NhomSanPhamViewModel.cs" />
     <Compile Include="ViewModels\PhanQuyenViewModel.cs" />
+    <Compile Include="ViewModels\SanPhamViewModel.cs" />
     <Compile Include="ViewModels\TaiKhoanViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +178,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="storage\default.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -192,10 +195,10 @@
     <Content Include="Views\NhaCungCap\Index.cshtml" />
     <Content Include="Views\NhomSanPham\Index.cshtml" />
     <Content Include="Views\DanhMuc\Index.cshtml" />
+    <Content Include="Views\SanPham\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="storage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
