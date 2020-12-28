@@ -87,6 +87,7 @@ create table SanPham
 go
 
 select * from SanPham
+delete from SanPham where id = 46
 
 
 create table DonHang

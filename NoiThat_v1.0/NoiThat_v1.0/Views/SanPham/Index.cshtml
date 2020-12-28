@@ -4,12 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-<!--Toast thông báo-->
-<div class="toast" id="toast" style="position: absolute; top: 10px; right: 10px;">
-    <h5 class="alert alert-success show m-0" id="mess" role="alert">
-    </h5>
-</div>
-
 <!--Nút mở Modal-->
 <a class="btn btn-success m-3" data-toggle="modal" data-target="#SanPhamModal">Thêm sản phẩm</a>
 
@@ -24,13 +18,16 @@
                 </button>
             </div>
             <div class="modal-body">
+                @using (Ajax.BeginForm("AddOrEdit", "SanPham", new AjaxOptions{ HttpMethod = "POST", OnSuccess = "Success"}, new {enctype = "multipart/form-data"}))
+                {
                     @Html.Hidden("ID", "0")
                     <div class="form-group">
                         @Html.Editor("Ten", new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên sản phẩm" } })
                         @Html.ValidationMessage("Ten", "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="file" class="form-control-file" accept="image/jpeg, image/png, image/jpg" name="ImgUpload" id="ImgUpload" >
+                        <input type="file" class="form-control-file" accept="*.jpeg, *.png, *.jpg" name="ImgUpload" id="ImgUpload">
+                        <label class="col-form-label text-danger" id="ImgMess">Nếu không chọn file sẽ hiển thị ảnh mặc định!</label>
                     </div>
                     <div class="form-group">
                         @Html.DropDownList("IDDanhMucSP", ViewBag.listDM as SelectList, "Chọn danh mục sản phẩm", new { @class = "form-control" })
@@ -45,9 +42,10 @@
                         @Html.ValidationMessage("MoTa", "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-success float-right ml-3" id="btnSubmit" onclick="Submit()" value="Submit" />
+                        <input type="submit" class="btn btn-success float-right ml-3" id="btnSubmit" value="Submit" />
                         <input type="reset" class="btn btn-secondary float-right" value="Reset" />
                     </div>
+                }
             </div>
         </div>
     </div>
@@ -66,24 +64,6 @@
     </thead>
 </table>
 
-<!-- Modal -->
-<div class="modal fade" id="ConfirmModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Bạn có chắc chắn xóa không?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" id="Delete" class="btn btn-primary">Xóa</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     var table;
     $.noConflict();
@@ -97,8 +77,8 @@
             },
             "columns": [
                 {
-                    "data": 'ImgPath', "render": function (img) {
-                        return '<img src = "https://localhost:44303'+img+'"/>';
+                    "data": 'PathImg', "render": function (img) {
+                        return '<img src = "https://localhost:44303'+img+'" height = "100px" />';
                     }
                 },
                 { "data": "Ten" },
@@ -107,7 +87,7 @@
                 { "data": "TenNCC" },
                 {
                     "data": "ID", "render": function (id) {
-                        return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=Delete('" + id + "')>Delete</a>";
+                        return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/SanPham/Delete')>Delete</a>";
                     },
                     "orderable": false,
                     "searchable": false
@@ -116,114 +96,38 @@
         });
     });
 
-    var EditID = 0;
-    var EditMode = false;
-
-    function Submit() {
-        var form = new FormData();
-
-        form.append("id", EditID);
-        form.append("ten", $('#Ten').val());
-        form.append("iddanhmucsp", $('#IDDanhMucSP option:selected').val());
-        form.append("idncc", $('#IDNCC option:selected').val());
-        form.append("mota", $('#MoTa').val());
-        form.append("ImgUpload", $('#ImgUpload')[0].files[0]);
-
-        $.ajax({
-            type: 'POST',
-            url: '/SanPham/AddOrEdit',
-            data: form,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                if (data.success) {
-                    $('#mess').removeClass("alert-danger").addClass("alert-success");
-
-                    $('#SanPhamModal').modal('hide');
-
-                    RefreshModal();
-
-                    table.ajax.reload();
-                }
-                else $('#mess').removeClass("alert-success").addClass("alert-danger");
-
-                $('#mess').html(data.message);
-                $('#toast').toast({ delay: 3000 });
-                $('#toast').toast('show');
-            }
-        });
-    }
-
-    function Success(data) {
-        if (data.success) {
-            $('#mess').removeClass("alert-danger").addClass("alert-success");
-
-            $('#SanPhamModal').modal('hide');
-
-            RefreshModal();
-
-            table.ajax.reload();
-        }
-        else $('#mess').removeClass("alert-success").addClass("alert-danger");
-
-        $('#mess').html(data.message);
-        $('#toast').toast({ delay: 3000 });
-        $('#toast').toast('show');
-    }
-
     function BeginEdit(id) {
         var url = "/SanPham/BeginEdit";
-        $.get(url, { id: id }).done(function (n) {
-            $('#ID').val(n.ID);
-            $('#Ten').val(n.Ten);
-            $('#Email').val(n.Email);
-            $('#SoDienThoai').val(n.SoDienThoai);
-            $('#DiaChi').val(n.DiaChi);
-            $('#MaSoThue').val(n.MaSoThue);
-            $('#SoTaiKhoan').val(n.SoTaiKhoan);
-            $('#NguoiDaiDien').val(n.NguoiDaiDien);
+        $.get(url, { id: id }).done(function (s) {
+            $('#ID').val(s.ID);
+            $('#Ten').val(s.Ten);
+            $('#IDDanhMucSP').val(s.IDDM);
+            $('#IDNCC').val(s.IDNCC);
+            $('#MoTa').val(s.Mota);
 
-            $('#SanPhampModal').modal('show');
+            $('#ImgMess').html('Không chọn file nếu muốn giữ ảnh cũ.');
 
+            $('#SanPhamModal').modal('show');
+            
             $('#ModalLabel').html('Cập nhật thông tin');
         });
     }
 
-    function Delete(id) {
-        $('#ConfirmModal').modal('show');
-        $('#Delete').click(function () {
-            $.ajax({
-                type: 'POST',
-                url: '/SanPham/Delete',
-                data: JSON.stringify({
-                    id: id
-                }),
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    if (data.success) {
-                        $('#mess').removeClass("alert-danger").addClass("alert-success");
-                        table.ajax.reload();
-                    }
-                    else $('#mess').removeClass("alert-success").addClass("alert-danger");
-
-                    $('#mess').html(data.message);
-                    $('#toast').toast({ delay: 5000 });
-                    $('#toast').toast('show');
-                }
-            });
-            $('#ConfirmModal').modal('hide');
-        });
+    function my_success() {
+        $('#SanPhamModal').modal('hide');
+        RefreshModal();
     }
 
     function RefreshModal() {
         $('#ID').val('0');
         $('#Ten').val('');
-        $('#Email').val('');
-        $('#SoDienThoai').val('');
-        $('#DiaChi').val('');
-        $('#MaSoThue').val('');
-        $('#SoTaiKhoan').val('');
-        $('#NguoiDaiDien').val('');
+        $('#IDDanhMucSP').val(null);
+        $('#IDNCC').val(null);
+        $('#MoTa').val('');
+
+        $('#ImgMess').html('Nếu không chọn file sẽ hiển thị ảnh mặc định!');
+
+        $('#SanPhamModal').modal('hide');
 
         $('#ModalLabel').html('Thêm sản phẩm');
     }

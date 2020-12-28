@@ -15,5 +15,7 @@ namespace NoiThat_v1._0.ViewModels
         public int IDDM { get; set; }
         public string TenDM { get; set; }
         public string TenNhom { get; set; }
+        public string Mota { get; set; }
+        public string PathImg { get; set; }
     }
 }
