@@ -65,17 +65,15 @@ namespace NoiThat_v1._0.Controllers
             {
                 if (n.ID == 0)
                 {
-                    try
+                    if (db.NhaCungCaps.Where(p => p.Ten == n.Ten).FirstOrDefault() != null)
                     {
-                        db.NhaCungCaps.Add(n);
-                        db.SaveChanges();
+                        return Json(new { success = false, message = "Tên nhà cung cấp đã bị trùng!" }, JsonRequestBehavior.AllowGet);
+                    }
 
-                        return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
-                    catch
-                    {
-                        return Json(new { success = false, message = "Thêm thông thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
+                    db.NhaCungCaps.Add(n);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

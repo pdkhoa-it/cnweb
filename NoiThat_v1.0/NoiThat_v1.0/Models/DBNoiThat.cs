@@ -46,8 +46,20 @@ namespace NoiThat_v1._0.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DonHang>()
+                .Property(e => e.Sdt)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DonHang>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DonHang>()
                 .Property(e => e.NgayThang)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<DonHang>()
+                .Property(e => e.TongTien)
+                .HasPrecision(18, 0);
 
             modelBuilder.Entity<DonHang>()
                 .HasMany(e => e.ChiTietDonHangs)
@@ -82,7 +94,7 @@ namespace NoiThat_v1._0.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<SanPham>()
-                .Property(e => e.ImgPath)
+                .Property(e => e.Ten_img)
                 .IsUnicode(false);
 
             modelBuilder.Entity<SanPham>()
@@ -110,12 +122,6 @@ namespace NoiThat_v1._0.Models
             modelBuilder.Entity<TaiKhoan>()
                 .Property(e => e.Sdt)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<TaiKhoan>()
-                .HasMany(e => e.DonHangs)
-                .WithRequired(e => e.TaiKhoan)
-                .HasForeignKey(e => e.IDTaiKhoan)
-                .WillCascadeOnDelete(false);
         }
     }
 }

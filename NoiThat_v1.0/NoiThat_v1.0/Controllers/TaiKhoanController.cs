@@ -76,21 +76,18 @@ namespace NoiThat_v1._0.Controllers
             {
                 if (tk.ID == 0)
                 {
-                    try
+                    if(db.TaiKhoans.Where(p=>p.Email == tk.Email).FirstOrDefault() != null)
                     {
-                        Random r = new Random();
-                        tk.Salt = r.Next(100, 1000);
-                        tk.MatKhau = GetMD5(tk.MatKhau + tk.Salt.ToString());
-                        tk.XacNhanMatKhau = tk.MatKhau;
-                        db.TaiKhoans.Add(tk);
-                        db.SaveChanges();
+                        return Json(new { success = false, message = "Email đã tồn tại! Hãy thử đăng ký với một email khác!" }, JsonRequestBehavior.AllowGet);
+                    }    
+                    Random r = new Random();
+                    tk.Salt = r.Next(100, 1000);
+                    tk.MatKhau = GetMD5(tk.MatKhau + tk.Salt.ToString());
+                    tk.XacNhanMatKhau = tk.MatKhau;
+                    db.TaiKhoans.Add(tk);
+                    db.SaveChanges();
 
-                        return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
-                    catch
-                    {
-                        return Json(new { success = false, message = "Thêm thông thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
+                    return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

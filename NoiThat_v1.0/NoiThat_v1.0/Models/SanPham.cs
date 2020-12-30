@@ -27,9 +27,11 @@ namespace NoiThat_v1._0.Models
         public string Ten_slug { get; set; }
 
         [Required]
-        public string ImgPath { get; set; }
+        [StringLength(100)]
+        public string Ten_img { get; set; }
 
         [Required]
+        [StringLength(500)]
         public string MoTa { get; set; }
 
         public int IDNCC { get; set; }
@@ -45,6 +47,5 @@ namespace NoiThat_v1._0.Models
 
         [NotMapped]
         public HttpPostedFileBase ImgUpload { get; set; }
-
     }
 }

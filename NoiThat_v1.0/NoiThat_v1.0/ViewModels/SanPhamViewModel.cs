@@ -9,7 +9,7 @@ namespace NoiThat_v1._0.ViewModels
     {
         public int ID { get; set; }
         public string Ten { get; set; }
-        public string ImgPath { get; set; }
+        public string Ten_img { get; set; }
         public int IDNCC { get; set; }
         public string TenNCC { get; set; }
         public int IDDM { get; set; }

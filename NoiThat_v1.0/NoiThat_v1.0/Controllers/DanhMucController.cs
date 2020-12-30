@@ -62,23 +62,23 @@ namespace NoiThat_v1._0.Controllers
             {
                 if (d.ID == 0)
                 {
-                    try
+
+                    d.Ten_slug = RemoveUnicode(d.Ten);
+
+                    if (db.DanhMucSanPhams.Where(p => p.Ten_slug == d.Ten_slug).FirstOrDefault() != null)
                     {
-                        NhomSanPham n = db.NhomSanPhams.Where(p => p.ID == d.IDNhomSP).FirstOrDefault();
-
-                        d.Ten_slug = RemoveUnicode(d.Ten);
-                        string f = Server.MapPath(string.Format("~/storage/{0}/{1}",n.Ten_slug, d.Ten_slug));
-
-                        Directory.CreateDirectory(f);
-
-                        db.DanhMucSanPhams.Add(d);
-                        db.SaveChanges();
-                        return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, message = "Tên hoặc tên không dấu của danh mục đã tồn tại!" }, JsonRequestBehavior.AllowGet);
                     }
-                    catch
-                    {
-                        return Json(new { success = false, message = "Thêm mới thất bại!" }, JsonRequestBehavior.AllowGet);
-                    }
+
+                    NhomSanPham n = db.NhomSanPhams.Where(p => p.ID == d.IDNhomSP).FirstOrDefault();
+
+                    string f = Server.MapPath(string.Format("~/storage/{0}/{1}",n.Ten_slug, d.Ten_slug));
+
+                    Directory.CreateDirectory(f);
+
+                    db.DanhMucSanPhams.Add(d);
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

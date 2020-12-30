@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NoiThat_v1._0.Controllers
 {
@@ -44,7 +45,9 @@ namespace NoiThat_v1._0.Controllers
                                                    IDDM = s.IDDanhMucSP,
                                                    TenDM = d.Ten,
                                                    TenNhom = nh.Ten,
-                                                   PathImg = "/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.ImgPath
+                                                   Mota = s.MoTa,
+                                                   Ten_img = s.Ten_img,
+                                                   PathImg = "/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_img
                                                 }).ToList();
                 return Json(new { data = list }, JsonRequestBehavior.AllowGet);
             }    
@@ -84,34 +87,32 @@ namespace NoiThat_v1._0.Controllers
 
                 if (s.ID == 0)
                 {
-                    try
+                    if(db.SanPhams.Where(p=>p.Ten_slug == s.Ten_slug).FirstOrDefault() != null)
                     {
-                        if (s.ImgUpload != null)
-                        {
-                            //Lấy đuôi file ảnh
-                            string ex = Path.GetExtension(s.ImgUpload.FileName);
-                            //Lưu đường dẫn
-                            s.ImgPath = s.Ten_slug + ex;
-                            //Lưu file vào thư mục
-                            s.ImgUpload.SaveAs(Path.Combine(Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/"), s.Ten_slug + ex));
-                        }
-                        else
-                        {
-                            //Copy và lưu file ảnh mặc định cho sản phẩm
-                            System.IO.File.Copy(Server.MapPath("~/storage/default.png"), Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_slug + ".png"));
-                            //Lưu đường dẫn
-                            s.ImgPath = s.Ten_slug + ".png";
-                        }
+                        return Json(new { success = false, message = "Tên sản phẩm đã tồn tại!" }, JsonRequestBehavior.AllowGet);
+                    }   
 
-                        db.SanPhams.Add(s);
-                        db.SaveChanges();
-
-                        return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
-                    catch
+                    if (s.ImgUpload != null)
                     {
-                        return Json(new { success = false, message = "Thêm mới thất bại!" }, JsonRequestBehavior.AllowGet);
+                        //Lấy đuôi file ảnh
+                        string ex = Path.GetExtension(s.ImgUpload.FileName);
+                        //Lưu đường dẫn
+                        s.Ten_img = s.Ten_slug + ex;
+                        //Lưu file vào thư mục
+                        s.ImgUpload.SaveAs(Path.Combine(Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/"), s.Ten_slug + ex));
                     }
+                    else
+                    {
+                        //Copy và lưu file ảnh mặc định cho sản phẩm
+                        System.IO.File.Copy(Server.MapPath("~/storage/default.png"), Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_slug + ".png"));
+                        //Lưu đường dẫn
+                        s.Ten_img = s.Ten_slug + ".png";
+                    }
+
+                    db.SanPhams.Add(s);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {   
@@ -122,12 +123,7 @@ namespace NoiThat_v1._0.Controllers
                                                where (sEdit.ID == s.ID)
                                                select new SanPhamViewModel
                                                {
-                                                   ID = sEdit.ID,
-                                                   Ten = sEdit.Ten,
-                                                   IDDM = sEdit.IDDanhMucSP,
-                                                   TenDM = dEdit.Ten,
-                                                   TenNhom = nh.Ten,
-                                                   PathImg = "~/storage/" + nh.Ten_slug + "/" + dEdit.Ten_slug + "/" + sEdit.ImgPath
+                                                   PathImg = "~/storage/" + nh.Ten_slug + "/" + dEdit.Ten_slug + "/" + sEdit.Ten_img
                                                }).FirstOrDefault();
 
                         if(s.ImgUpload != null)
@@ -138,7 +134,7 @@ namespace NoiThat_v1._0.Controllers
                             //Lấy đuôi file ảnh
                             string ex = Path.GetExtension(s.ImgUpload.FileName);
                             //Lưu đường dẫn
-                            s.ImgPath = s.Ten_slug + ex;
+                            s.Ten_img = s.Ten_slug + ex;
                             //Lưu file vào thư mục
                             s.ImgUpload.SaveAs(Path.Combine(Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/"), s.Ten_slug + ex));
                         }
@@ -149,7 +145,7 @@ namespace NoiThat_v1._0.Controllers
                             //Copy và lưu file ảnh mặc định cho sản phẩm
                             System.IO.File.Copy(Server.MapPath(sp.PathImg), Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_slug + ex));
                             //Lưu đường dẫn
-                            s.ImgPath = s.Ten_slug + ex;
+                            s.Ten_img = s.Ten_slug + ex;
 
                             //Xóa ảnh cũ
                             System.IO.File.Delete(Server.MapPath(sp.PathImg));
@@ -160,7 +156,7 @@ namespace NoiThat_v1._0.Controllers
                         ss.MoTa = s.MoTa;
                         ss.IDDanhMucSP = s.IDDanhMucSP;
                         ss.IDNCC = ss.IDNCC;
-                        ss.ImgPath = s.ImgPath;
+                        ss.Ten_img = s.Ten_img;
                         ss.ImgUpload = s.ImgUpload;
 
                         db.SaveChanges();
@@ -182,12 +178,7 @@ namespace NoiThat_v1._0.Controllers
                                            where (s.ID == id)
                                            select new SanPhamViewModel
                                            {
-                                               ID = s.ID,
-                                               Ten = s.Ten,
-                                               IDDM = s.IDDanhMucSP,
-                                               TenDM = d.Ten,
-                                               TenNhom = nh.Ten,
-                                               PathImg = "~/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.ImgPath
+                                               PathImg = "~/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_img
                                            }).FirstOrDefault();
 
 
@@ -231,6 +222,66 @@ namespace NoiThat_v1._0.Controllers
                 text = text.Replace(" ", "-");
             }
             return text;
+        }
+
+        [HttpPost]
+        public ActionResult Import(HttpPostedFileBase excelfile)
+        {
+            if (excelfile == null || excelfile.ContentLength == 0)
+            {
+                return Json(new { success = false, message = "Chưa chọn file hoặc file rỗng!" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                string path = Server.MapPath("~/storage/" + excelfile.FileName);
+
+                excelfile.SaveAs(path);
+
+                Excel.Application application = new Excel.Application();
+                Excel.Workbook workbook = application.Workbooks.Open(path);
+                Excel.Worksheet worksheet = workbook.ActiveSheet;
+                Excel.Range range = worksheet.UsedRange;
+
+                using(DBNoiThat db = new DBNoiThat())
+                {
+                    for (int row = 3; row <= range.Rows.Count; row++)
+                    {
+                        SanPham s = new SanPham();
+
+                        s.Ten = ((Excel.Range)range.Cells[row, 1]).Text;
+                        s.Ten_slug = RemoveUnicode(s.Ten);
+                        s.IDDanhMucSP = GetIDDanhMuc(((Excel.Range)range.Cells[row, 2]).Text);
+                        s.IDNCC = GetIDNhaCungCap(((Excel.Range)range.Cells[row, 4]).Text);
+                        s.Ten_img = ((Excel.Range)range.Cells[row, 5]).Text;
+                        s.MoTa = ((Excel.Range)range.Cells[row, 6]).Text;
+
+                        db.SanPhams.Add(s);
+                    }
+                    db.SaveChanges();
+                }
+                workbook.Close();
+                application.Quit();
+
+                System.IO.File.Delete(path);
+
+                return Json(new { success = true, message = "OK" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public int GetIDNhaCungCap(string ten)
+        {
+            using(DBNoiThat db = new DBNoiThat())
+            {
+                return db.NhaCungCaps.Where(p => p.Ten == ten).FirstOrDefault().ID;
+            }    
+        }
+
+        public int GetIDDanhMuc(string ten)
+        {
+            using (DBNoiThat db = new DBNoiThat())
+            {
+                return db.DanhMucSanPhams.Where(p => p.Ten == ten).FirstOrDefault().ID;
+            }
         }
     }
 }

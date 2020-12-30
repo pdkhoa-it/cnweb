@@ -51,21 +51,20 @@ namespace NoiThat_v1._0.Controllers
             {
                 if (n.ID == 0)
                 {
-                    try
-                    {
-                        n.Ten_slug = RemoveUnicode(n.Ten);
-                        string f = Server.MapPath(string.Format("~/storage/{0}", n.Ten_slug));
+                    n.Ten_slug = RemoveUnicode(n.Ten);
 
-                        Directory.CreateDirectory(f);
-
-                        db.NhomSanPhams.Add(n);
-                        db.SaveChanges();
-                        return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
-                    catch
+                    if(db.NhomSanPhams.Where(p=>p.Ten_slug == n.Ten_slug).FirstOrDefault() != null)
                     {
-                        return Json(new { success = false, message = "Thêm mới thất bại!" }, JsonRequestBehavior.AllowGet);
-                    }
+                        return Json(new { success = false, message = "Tên hoặc tên không dấu của nhóm này đã tồn tại!" }, JsonRequestBehavior.AllowGet);
+                    }    
+
+                    string f = Server.MapPath(string.Format("~/storage/{0}", n.Ten_slug));
+
+                    Directory.CreateDirectory(f);
+
+                    db.NhomSanPhams.Add(n);
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

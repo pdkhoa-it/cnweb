@@ -6,6 +6,7 @@
 
 <!--Nút mở Modal-->
 <a class="btn btn-success m-3" data-toggle="modal" data-target="#SanPhamModal">Thêm sản phẩm</a>
+<a class="btn btn-warning" data-toggle="modal" data-target="#ImportModal">Import Excel</a>
 
 <!-- Modal -->
 <div class="modal fade" id="SanPhamModal" data-backdrop="static">
@@ -18,7 +19,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Ajax.BeginForm("AddOrEdit", "SanPham", new AjaxOptions{ HttpMethod = "POST", OnSuccess = "Success"}, new {enctype = "multipart/form-data"}))
+                @using (Ajax.BeginForm("AddOrEdit", "SanPham", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success" }, new { enctype = "multipart/form-data" }))
                 {
                     @Html.Hidden("ID", "0")
                     <div class="form-group">
@@ -26,7 +27,7 @@
                         @Html.ValidationMessage("Ten", "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="file" class="form-control-file" accept="*.jpeg, *.png, *.jpg" name="ImgUpload" id="ImgUpload">
+                        <input type="file" class="form-control-file" accept="*.png, *.jpg, *.jpeg" name="ImgUpload" id="ImgUpload">
                         <label class="col-form-label text-danger" id="ImgMess">Nếu không chọn file sẽ hiển thị ảnh mặc định!</label>
                     </div>
                     <div class="form-group">
@@ -59,10 +60,34 @@
             <th>Danh mục</th>
             <th>Nhóm</th>
             <th>Nhà cung cấp</th>
+            <th>Tên ảnh</th>
+            <th>Mô tả</th>
             <th></th>
         </tr>
     </thead>
 </table>
+
+<!-- Modal import file Excel -->
+<div class="modal fade" id="ImportModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nhập từ file Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using(Ajax.BeginForm("Import", "SanPham", new AjaxOptions { HttpMethod = "POST", OnSuccess = "ImportSuccess"}, new{ enctype = "multipart/form-data" }))
+                {
+                    <input type="file" class="form-control-file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="excelfile" id="excelfile" />
+                    <input type="submit" class="btn btn-success float-right ml-3" value="Nhập" />
+                    <input type="button" data-dismiss="modal" class="btn btn-secondary float-right" value="Hủy" />
+                 }
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     var table;
@@ -75,16 +100,34 @@
                 "type": "GET",
                 "dataType": "json"
             },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6]
+                    }
+                },
+                'colvis'
+            ],
             "columns": [
                 {
                     "data": 'PathImg', "render": function (img) {
-                        return '<img src = "https://localhost:44303'+img+'" height = "100px" />';
+                        return '<img src = "https://localhost:44303' + img + '" height = "100px" />';
                     }
                 },
                 { "data": "Ten" },
                 { "data": "TenDM" },
                 { "data": "TenNhom" },
                 { "data": "TenNCC" },
+                { "data": "Ten_img", "visible": false, },
+                { "data": "Mota", "visible": false, },
                 {
                     "data": "ID", "render": function (id) {
                         return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/SanPham/Delete')>Delete</a>";
@@ -108,7 +151,7 @@
             $('#ImgMess').html('Không chọn file nếu muốn giữ ảnh cũ.');
 
             $('#SanPhamModal').modal('show');
-            
+
             $('#ModalLabel').html('Cập nhật thông tin');
         });
     }
@@ -131,4 +174,19 @@
 
         $('#ModalLabel').html('Thêm sản phẩm');
     }
+
+    function ImportSuccess(data) {
+        if (data.success) {
+            $('#mess').removeClass("alert-danger").addClass("alert-success");
+            table.ajax.reload();
+        }
+        else $('#mess').removeClass("alert-success").addClass("alert-danger");
+
+        $('#ImportModal').modal('hide');
+
+        $('#mess').html(data.message);
+        $('#toast').toast({ delay: 3000 });
+        $('#toast').toast('show');
+    }
+
 </script>

@@ -17,7 +17,17 @@ namespace NoiThat_v1._0.Models
 
         public int ID { get; set; }
 
-        public int IDTaiKhoan { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string HoTen { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Sdt { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -35,9 +45,9 @@ namespace NoiThat_v1._0.Models
 
         public byte TinhTrangGiaoHang { get; set; }
 
+        public decimal TongTien { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
-
-        public virtual TaiKhoan TaiKhoan { get; set; }
     }
 }

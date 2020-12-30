@@ -15,7 +15,6 @@ create table PhanQuyen
 go
 
 insert into PhanQuyen values(N'Quản Trị Viên');
-insert into PhanQuyen values(N'Nhân Viên');
 insert into PhanQuyen values(N'Khách Hàng');
 
 select * from PhanQuyen
@@ -76,7 +75,7 @@ create table SanPham
 	ID int identity primary key,
 	Ten nvarchar(100) not null,
 	Ten_slug varchar(100) not null,
-	ImgPath varchar(max) not null,
+	Ten_img varchar(100) not null,
 	MoTa nvarchar(500) not null,
 	IDNCC int not null,
 	IDDanhMucSP int not null,
@@ -93,14 +92,15 @@ delete from SanPham where id = 46
 create table DonHang
 (
 	ID int identity primary key,
-	IDTaiKhoan int not null,
+	HoTen nvarchar(50) not null,
+	Sdt varchar(20) not null,
+	Email varchar(100) not null,
 	HinhThucThanhToan nvarchar(50) not null,
 	NgayThang varchar(20) not null,
 	DiaChiGiaoHang nvarchar(100) not null,
 	TinhTrangThanhToan tinyint not null,
-	TinhTrangGiaoHang tinyint not null
-
-	foreign key(IDTaiKhoan) references TaiKhoan(ID)
+	TinhTrangGiaoHang tinyint not null,
+	TongTien decimal default 0 not null
 );
 go
 
@@ -117,3 +117,5 @@ create table ChiTietDonHang
 	foreign key(IDDonhang) references DonHang(ID)
 );
 go
+
+

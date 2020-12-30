@@ -49,16 +49,13 @@ namespace NoiThat_v1._0.Controllers
             {
                 if (pq.ID == 0)
                 {
-                    try
+                    if (db.PhanQuyens.Where(p => p.Ten == pq.Ten).FirstOrDefault() != null)
                     {
-                        db.PhanQuyens.Add(pq);
-                        db.SaveChanges();
-                        return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
-                    }
-                    catch
-                    {
-                        return Json(new { success = false, message = "Thêm mới thất bại!" }, JsonRequestBehavior.AllowGet);
-                    }
+                        return Json(new { success = false, message = "Quyền này đã tồn tại!" }, JsonRequestBehavior.AllowGet);
+                    }    
+                    db.PhanQuyens.Add(pq);
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
