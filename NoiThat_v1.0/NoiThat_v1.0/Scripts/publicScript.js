@@ -6,8 +6,7 @@ function Success(data) {
     if (data.success) {
     $('#mess').removeClass("alert-danger").addClass("alert-success");
 
-        my_success();
-        table.ajax.reload();
+        Refresh();
     }
     else $('#mess').removeClass("alert-success").addClass("alert-danger");
 

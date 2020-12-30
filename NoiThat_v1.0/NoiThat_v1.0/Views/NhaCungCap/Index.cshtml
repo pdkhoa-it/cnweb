@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ModalLabel">Thêm nhà cung cấp</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="RefreshModal()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Refresh()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -122,12 +122,7 @@
         });
     }
 
-    function my_success() {
-        $('#NhaCungCapModal').modal('hide');
-        RefreshModal();
-    }
-
-    function RefreshModal() {
+    function Refresh() {
         $('#ID').val('0');
         $('#Ten').val('');
         $('#Email').val('');
@@ -136,6 +131,8 @@
         $('#MaSoThue').val('');
         $('#SoTaiKhoan').val('');
         $('#NguoiDaiDien').val('');
+
+        $('#NhaCungCapModal').modal('hide');
 
         $('#ModalLabel').html('Thêm nhà cung cấp');
     }

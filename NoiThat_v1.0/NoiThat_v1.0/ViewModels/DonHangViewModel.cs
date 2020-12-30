@@ -11,8 +11,8 @@ namespace NoiThat_v1._0.ViewModels
         public string HoTen { get; set; }
         public string SDT { get; set; }
         public string Email { get; set; }
-        public string HinhThucThanhToan { get; set; }
-        public string NgayThang { get; set; }
+        public byte HinhThucThanhToan { get; set; }
+        public string ThoiGian { get; set; }
         public string DiaChiGiaoHang { get; set; }
         public byte TinhTrangThanhToan { get; set; }
         public byte TinhTrangGiaoHang { get; set; }

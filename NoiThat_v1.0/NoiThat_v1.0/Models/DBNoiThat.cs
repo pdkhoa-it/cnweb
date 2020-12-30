@@ -54,7 +54,7 @@ namespace NoiThat_v1._0.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<DonHang>()
-                .Property(e => e.NgayThang)
+                .Property(e => e.ThoiGian)
                 .IsUnicode(false);
 
             modelBuilder.Entity<DonHang>()

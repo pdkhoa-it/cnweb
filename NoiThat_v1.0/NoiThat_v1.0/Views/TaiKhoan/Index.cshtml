@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ModalLabel">Thêm tài khoản</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="RefreshModal()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Refresh()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        @Html.Editor("Sdt", new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại" } })
+                        @Html.Editor("Sdt", new { htmlAttributes = new { @class = "form-control", @type = "number", @placeholder = "Số điện thoại" } })
                         @Html.ValidationMessage("Sdt", "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
@@ -149,12 +149,7 @@
         });
     }
 
-    function my_success() {
-        RefreshModal();
-        $('#TaiKhoanModal').modal('hide');
-    }
-
-    function RefreshModal() {
+    function Refresh() {
         $('#ID').val('0');
         $('#HoTen').val('');
         $('#Email').val('');
@@ -165,6 +160,8 @@
         $('#IDQuyen').val('');
         $('#MatKhau').val('');
         $('#XacNhanMatKhau').val('');
+
+        $('#TaiKhoanModal').modal('hide');
 
         $('#ModalLabel').html('Thêm tài khoản');
     }

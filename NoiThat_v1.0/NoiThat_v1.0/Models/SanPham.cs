@@ -45,6 +45,7 @@ namespace NoiThat_v1._0.Models
 
         public virtual NhaCungCap NhaCungCap { get; set; }
 
+
         [NotMapped]
         public HttpPostedFileBase ImgUpload { get; set; }
     }

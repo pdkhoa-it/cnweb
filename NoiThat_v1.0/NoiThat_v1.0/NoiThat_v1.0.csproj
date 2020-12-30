@@ -205,11 +205,12 @@
     <Content Include="Views\NhomSanPham\Index.cshtml" />
     <Content Include="Views\DanhMuc\Index.cshtml" />
     <Content Include="Views\SanPham\Index.cshtml" />
+    <Content Include="Views\DonHang\Index.cshtml" />
+    <Content Include="Views\DonHang\DonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ChiTietDH\" />
-    <Folder Include="Views\DonHang\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

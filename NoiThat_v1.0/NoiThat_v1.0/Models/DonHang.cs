@@ -30,16 +30,14 @@ namespace NoiThat_v1._0.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string HinhThucThanhToan { get; set; }
-
-        [Required]
         [StringLength(20)]
-        public string NgayThang { get; set; }
+        public string ThoiGian { get; set; }
 
         [Required]
         [StringLength(100)]
         public string DiaChiGiaoHang { get; set; }
+
+        public byte HinhThucThanhToan { get; set; }
 
         public byte TinhTrangThanhToan { get; set; }
 

@@ -163,7 +163,6 @@ E:\Khu I\MVC\NoiThat_v1.0 - Copy\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.csproj.Core
 E:\Khu I\MVC\NoiThat_v1.0 - Copy\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.csproj.CopyComplete
 E:\Khu I\MVC\NoiThat_v1.0 - Copy\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.dll
 E:\Khu I\MVC\NoiThat_v1.0 - Copy\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.pdb
-E:\Khu I\MVC\NoiThat_v1.0 - Copy\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.csprojAssemblyReference.cache
 E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\bin\NoiThat_v1.0.dll.config
 E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\bin\NoiThat_v1.0.dll
 E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\bin\NoiThat_v1.0.pdb
@@ -246,3 +245,4 @@ E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.csproj.
 E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.csproj.CopyComplete
 E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.dll
 E:\Khu I\MVC\NoiThat_v1.0 - Copy (2)\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.pdb
+E:\Khu I\MVC\NoiThat_v1.0 - Copy\NoiThat_v1.0\obj\Debug\NoiThat_v1.0.csprojAssemblyReference.cache

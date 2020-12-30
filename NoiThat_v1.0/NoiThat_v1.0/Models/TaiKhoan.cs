@@ -46,5 +46,6 @@ namespace NoiThat_v1._0.Models
         public int IDQuyen { get; set; }
 
         public virtual PhanQuyen PhanQuyen { get; set; }
+
     }
 }

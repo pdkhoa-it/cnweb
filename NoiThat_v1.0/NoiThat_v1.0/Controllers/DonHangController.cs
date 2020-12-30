@@ -19,6 +19,11 @@ namespace NoiThat_v1._0.Controllers
             return View();
         }
 
+        public ActionResult DonHang()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult GetDanhSach()
         {
@@ -31,7 +36,7 @@ namespace NoiThat_v1._0.Controllers
                                                     SDT = d.Sdt,
                                                     Email = d.Email,
                                                     HinhThucThanhToan = d.HinhThucThanhToan,
-                                                    NgayThang = d.NgayThang,
+                                                    ThoiGian = d.ThoiGian,
                                                     DiaChiGiaoHang = d.DiaChiGiaoHang,
                                                     TinhTrangThanhToan = d.TinhTrangThanhToan,
                                                     TinhTrangGiaoHang = d.TinhTrangGiaoHang,
@@ -54,7 +59,7 @@ namespace NoiThat_v1._0.Controllers
                                              SDT = d.Sdt,
                                              Email = d.Email,
                                              HinhThucThanhToan = d.HinhThucThanhToan,
-                                             NgayThang = d.NgayThang,
+                                             ThoiGian = d.ThoiGian,
                                              DiaChiGiaoHang = d.DiaChiGiaoHang,
                                              TinhTrangThanhToan = d.TinhTrangThanhToan,
                                              TinhTrangGiaoHang = d.TinhTrangGiaoHang,
@@ -75,12 +80,15 @@ namespace NoiThat_v1._0.Controllers
                     Directory.CreateDirectory(Server.MapPath("~/storage/Don-hang"));
 
                 //Kiểm tra và tạo thư mục cho ngày
-                if (!Directory.Exists(Server.MapPath("~/storage/Don-hang/" + d.NgayThang)))
-                    Directory.CreateDirectory(Server.MapPath("~/storage/Don-hang/" + d.NgayThang));
+                if (!Directory.Exists(Server.MapPath("~/storage/Don-hang/" + d.ThoiGian)))
+                    Directory.CreateDirectory(Server.MapPath("~/storage/Don-hang/" + d.ThoiGian));
 
 
                 if (d.ID == 0)
                 {
+                    d.TinhTrangThanhToan = 0;
+                    d.TinhTrangGiaoHang = 0;
+                    d.TongTien = 0;
                     db.DonHangs.Add(d);
                     db.SaveChanges();
                     return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
