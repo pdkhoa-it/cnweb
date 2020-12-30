@@ -5,7 +5,6 @@ var DeleteUrl = '';
 function Success(data) {
     if (data.success) {
     $('#mess').removeClass("alert-danger").addClass("alert-success");
-
         Refresh();
     }
     else $('#mess').removeClass("alert-success").addClass("alert-danger");
