@@ -95,9 +95,9 @@ create table DonHang
 	HoTen nvarchar(50) not null,
 	Sdt varchar(20) not null,
 	Email varchar(100) not null,
-	HinhThucThanhToan nvarchar(50) not null,
-	NgayThang varchar(20) not null,
+	ThoiGian varchar(20) not null,
 	DiaChiGiaoHang nvarchar(100) not null,
+	HinhThucThanhToan tinyint not null,
 	TinhTrangThanhToan tinyint not null,
 	TinhTrangGiaoHang tinyint not null,
 	TongTien decimal default 0 not null
@@ -106,7 +106,7 @@ go
 
 create table ChiTietDonHang
 (
-	ID int identity primary key,
+	IDCT int identity primary key,
 	IDSanPham int not null,
 	IDDonHang int not null,
 	SoLuong decimal not null,
@@ -118,4 +118,8 @@ create table ChiTietDonHang
 );
 go
 
+select * from DonHang
 
+select * from ChiTietDonHang
+
+drop table ChiTietDonHang
