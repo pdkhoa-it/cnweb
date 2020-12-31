@@ -1,0 +1,76 @@
+﻿@model NoiThat_v1._0.Models.DanhMucSanPham
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    @using (Ajax.BeginForm("AddOrEdit", "DanhMuc", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success" }))
+    {
+        <div class="form-group">
+            @Html.Hidden("ID", "0")
+            @Html.Editor("Ten", new { htmlAttributes = new { @class = "form-control w-25" } })
+            @Html.ValidationMessage("Ten", "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.DropDownList("IDNhomSP", ViewBag.listNhom as SelectList,"Chọn nhóm sản phẩm", new { @class = "form-control w-25" })
+            @Html.ValidationMessage("IDNhomSP", "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <input type="reset" class="btn btn-secondary" value="Reset" />
+            <input type="submit" class="btn btn-success" value="Submit" />
+        </div>
+    }
+
+    <table id="tableDM" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Tên Danh mục</th>
+                <th>Tên nhóm</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    var table;
+    $.noConflict();
+    $(document).ready(function () {
+
+        table = $('#tableDM').DataTable({
+            "ajax": {
+                "url": "/DanhMuc/GetDanhSach",
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+                { "data": "Ten" },
+                { "data": "TenNhom" },
+                {
+                    "data": "ID", "render": function (id) {
+                        return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') ><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/DanhMuc/Delete')><i class='fa fa-trash'></i> Delete</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false
+                }],
+            lengthMenu: [[5, 10, 20, 50, -1], [5, 10, 20, 50, "All"]]
+        });
+    });
+
+    function BeginEdit(id) {
+        var url = "/DanhMuc/BeginEdit";
+        $.get(url, { id: id }).done(function (dm) {
+            $('#Ten').val(dm.Ten);
+            $('#IDNhomSP').val(dm.IDNhomSP)
+            $('#ID').val(dm.ID);
+        });
+    }
+
+    function Refresh() {
+        $('#IDNhomSP').val(null);
+        $('#Ten').val('');
+        $('#ID').val('0');
+    }
+
+</script>
