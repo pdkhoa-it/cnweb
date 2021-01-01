@@ -1,0 +1,141 @@
+﻿@model NoiThat_v2._0.Areas.Admin.Models.NhaCungCap
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!--Nút mở Modal-->
+<a class="btn btn-success m-3" data-toggle="modal" data-target="#NhaCungCapModal">Thêm nhà cung cấp</a>
+
+<!-- Modal -->
+<div class="modal fade" id="NhaCungCapModal" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Thêm nhà cung cấp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Refresh()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddOrEdit", "NhaCungCap", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success" }))
+                {
+                    @Html.Hidden("ID", "0")
+                    <div class="form-group">
+                        @Html.Editor("Ten", new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên nhà cung cấp" } })
+                        @Html.ValidationMessage("Ten", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Editor("SoDienThoai", new { htmlAttributes = new { @class = "form-control", @type = "number", @placeholder = "Số điện thoại" } })
+                        @Html.ValidationMessage("SoDienThoai", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Editor("DiaChi", new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ" } })
+                        @Html.ValidationMessage("DiaChi", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
+                        @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Editor("MaSoThue", new { htmlAttributes = new { @class = "form-control", @type = "number", @placeholder = "Mã số thuế" } })
+                        @Html.ValidationMessage("MaSoThue", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Editor("SoTaiKhoan", new { htmlAttributes = new { @class = "form-control", @type = "number", @placeholder = "Số tài khoản" } })
+                        @Html.ValidationMessage("SoTaiKhoan", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Editor("NguoiDaiDien", new { htmlAttributes = new { @class = "form-control", @placeholder = "Người đại diện" } })
+                        @Html.ValidationMessage("NguoiDaiDien", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success float-right ml-3" id="btnSubmit" value="Submit" />
+                        <input type="reset" class="btn btn-secondary float-right" value="Reset" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<table id="tableNCC" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Số tài khoản</th>
+            <th>Mã số thuế</th>
+            <th>Người đại diện</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    var table;
+    $.noConflict();
+    $(document).ready(function () {
+
+        table = $('#tableNCC').DataTable({
+            "ajax": {
+                "url": "/NhaCungCap/GetDanhSach",
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+                { "data": "Ten" },
+                { "data": "SoDienThoai" },
+                { "data": "Email" },
+                { "data": "DiaChi" },
+                { "data": "SoTaiKhoan" },
+                { "data": "MaSoThue" },
+                { "data": "NguoiDaiDien" },
+                {
+                    "data": "ID", "render": function (id) {
+                        return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/NhaCungCap/Delete')>Delete</a>";
+                    },
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "15%"
+                }],
+            lengthMenu: [[5, 10, 20, 50, -1], [5, 10, 20, 50, "All"]]
+        });
+    });
+
+    function BeginEdit(id) {
+        var url = "/NhaCungCap/BeginEdit";
+        $.get(url, { id: id }).done(function (n) {
+            $('#ID').val(n.ID);
+            $('#Ten').val(n.Ten);
+            $('#Email').val(n.Email);
+            $('#SoDienThoai').val(n.SoDienThoai);
+            $('#DiaChi').val(n.DiaChi);
+            $('#MaSoThue').val(n.MaSoThue);
+            $('#SoTaiKhoan').val(n.SoTaiKhoan);
+            $('#NguoiDaiDien').val(n.NguoiDaiDien);
+
+            $('#NhaCungCapModal').modal('show');
+
+            $('#ModalLabel').html('Cập nhật thông tin');
+        });
+    }
+
+    function Refresh() {
+        $('#ID').val('0');
+        $('#Ten').val('');
+        $('#Email').val('');
+        $('#SoDienThoai').val('');
+        $('#DiaChi').val('');
+        $('#MaSoThue').val('');
+        $('#SoTaiKhoan').val('');
+        $('#NguoiDaiDien').val('');
+
+        $('#NhaCungCapModal').modal('hide');
+
+        $('#ModalLabel').html('Thêm nhà cung cấp');
+    }
+</script>
