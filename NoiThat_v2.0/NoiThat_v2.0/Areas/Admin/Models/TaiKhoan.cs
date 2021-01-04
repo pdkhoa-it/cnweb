@@ -27,19 +27,15 @@ namespace NoiThat_v2._0.Areas.Admin.Models
         [StringLength(50)]
         public string HoTen { get; set; }
 
-        [Required]
         [StringLength(20)]
         public string NgaySinh { get; set; }
 
-        [Required]
         [StringLength(3)]
         public string GioiTinh { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string DiaChi { get; set; }
 
-        [Required]
         [StringLength(20)]
         public string Sdt { get; set; }
 

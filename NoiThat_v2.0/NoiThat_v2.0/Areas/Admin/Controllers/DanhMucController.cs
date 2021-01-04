@@ -71,7 +71,6 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     {
                         return Json(new { success = false, message = "Tên hoặc tên không dấu của danh mục đã tồn tại!" }, JsonRequestBehavior.AllowGet);
                     }
-
                     NhomSanPham n = db.NhomSanPhams.Where(p => p.ID == d.IDNhomSP).FirstOrDefault();
 
                     string f = Server.MapPath(string.Format("~/storage/{0}/{1}", n.Ten_slug, d.Ten_slug));

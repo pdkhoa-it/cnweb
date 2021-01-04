@@ -132,6 +132,11 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
         {
             using (DBNoiThat db = new DBNoiThat())
             {
+                if(db.TaiKhoans.Where(p=>p.HoTen == d.HoTen).FirstOrDefault() == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy tên khách hàng trong hệ thống!" }, JsonRequestBehavior.AllowGet);
+                }    
+
                 //Kiểm tra và tạo thư mục đơn hàng
                 if (!Directory.Exists(Server.MapPath("~/storage/Don-hang")))
                     Directory.CreateDirectory(Server.MapPath("~/storage/Don-hang"));

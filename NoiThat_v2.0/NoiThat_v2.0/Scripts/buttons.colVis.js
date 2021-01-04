@@ -18,7 +18,7 @@
 			}
 
 			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
+				$ = require('../Content/admin/Main/js/node_modules/datatables.net')(root, $).$;
 			}
 
 			if ( ! $.fn.dataTable.Buttons ) {

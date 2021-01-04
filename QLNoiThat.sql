@@ -26,10 +26,10 @@ create table TaiKhoan
 	XacNhanMatKhau varchar(max) not null,
 	Salt int not null,
 	HoTen nvarchar(50) not null,
-	NgaySinh varchar(20) not null,
-	GioiTinh nvarchar(3) not null,
-	DiaChi nvarchar(100) not null,
-	Sdt varchar(20) not null,
+	NgaySinh varchar(20),
+	GioiTinh nvarchar(3),
+	DiaChi nvarchar(100),
+	Sdt varchar(20),
 	IDQuyen int not null,
 	
 	foreign key(IDQuyen) references PhanQuyen(ID)
@@ -117,9 +117,3 @@ create table ChiTietDonHang
 	foreign key(IDDonhang) references DonHang(ID)
 );
 go
-
-select * from DonHang
-
-select * from ChiTietDonHang
-
-drop table ChiTietDonHang

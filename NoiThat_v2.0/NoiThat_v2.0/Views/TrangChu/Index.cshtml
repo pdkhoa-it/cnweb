@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>Trang chủ</h1>
+</div>
+
+
+<script>
+
+    function Success(dt) {
+        if (dt.admin) {
+            window.location.href = "/Admin/Home/Index";
+        }
+        if (dt.user) {
+            location.reload();
+        }
+    }
+
+    function Logout() {
+        $.post("/Login/Logout").done(
+            location.reload()
+        );
+    }
+
+</script>
