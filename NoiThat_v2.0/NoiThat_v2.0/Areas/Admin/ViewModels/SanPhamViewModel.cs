@@ -15,6 +15,7 @@ namespace NoiThat_v2._0.Areas.Admin.ViewModels
         public int IDDM { get; set; }
         public string TenDM { get; set; }
         public string TenNhom { get; set; }
+        public decimal Gia { get; set; }
         public string Mota { get; set; }
         public string PathImg { get; set; }
     }

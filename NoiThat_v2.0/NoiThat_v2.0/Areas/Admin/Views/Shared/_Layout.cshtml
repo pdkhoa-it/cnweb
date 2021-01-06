@@ -3,12 +3,12 @@
     Layout = null;
 }
 
-@{ 
+@*@{ 
     if(Session["admin"] == null)
     {
         Response.Redirect("/TrangChu/Index");
     }
-}
+}*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -320,8 +320,8 @@
     <script src="~/Content/Admin/Layout/js/sb-admin-2.js"></script>
 
     <script>
-        $.noConflict();
         function Logout() {
+            $.noConflict();
             $.post("/Login/Logout").done(
                 window.location.href = "/TrangChu/Index"
             );

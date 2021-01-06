@@ -98,6 +98,10 @@ namespace NoiThat_v2._0.Areas.Admin.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<SanPham>()
+                .Property(e => e.Gia)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<SanPham>()
                 .HasMany(e => e.ChiTietDonHangs)
                 .WithRequired(e => e.SanPham)
                 .HasForeignKey(e => e.IDSanPham)

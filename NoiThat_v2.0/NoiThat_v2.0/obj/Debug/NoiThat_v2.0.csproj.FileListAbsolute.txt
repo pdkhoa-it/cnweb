@@ -80,4 +80,8 @@ E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\EntityFramework.dll
 E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\EntityFramework.SqlServer.dll
 E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\EntityFramework.xml
 E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\EntityFramework.SqlServer.xml
+E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\PagedList.dll
+E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\PagedList.Mvc.dll
+E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\PagedList.xml
+E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\bin\PagedList.Mvc.xml
 E:\Khu I\Test MVC\NoiThat_v2.0\NoiThat_v2.0\obj\Debug\NoiThat_v2.0.csprojAssemblyReference.cache

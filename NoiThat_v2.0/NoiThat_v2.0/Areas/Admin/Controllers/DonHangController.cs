@@ -131,12 +131,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
         public ActionResult AddOrEdit(DonHang d)
         {
             using (DBNoiThat db = new DBNoiThat())
-            {
-                if(db.TaiKhoans.Where(p=>p.HoTen == d.HoTen).FirstOrDefault() == null)
-                {
-                    return Json(new { success = false, message = "Không tìm thấy tên khách hàng trong hệ thống!" }, JsonRequestBehavior.AllowGet);
-                }    
-
+            { 
                 //Kiểm tra và tạo thư mục đơn hàng
                 if (!Directory.Exists(Server.MapPath("~/storage/Don-hang")))
                     Directory.CreateDirectory(Server.MapPath("~/storage/Don-hang"));
@@ -178,8 +173,10 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
             {
                 if (ct.IDCT == 0)
                 {
-                    if (db.ChiTietDonHangs.Where(p => p.IDSanPham == ct.IDSanPham).FirstOrDefault() != null)
+                    if (db.ChiTietDonHangs.Where(p => p.IDSanPham == ct.IDSanPham && p.IDDonHang == ct.IDDonHang).FirstOrDefault() != null)
                         return Json(new { success = false, message = "Sản phẩm đã tồn tại trong đơn hàng!" }, JsonRequestBehavior.AllowGet);
+
+                    ct.DonGia = db.SanPhams.Where(p => p.ID == ct.IDSanPham).FirstOrDefault().Gia;
 
                     ct.ThanhTien = ct.SoLuong * ct.DonGia;
                     db.ChiTietDonHangs.Add(ct);
@@ -201,7 +198,6 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
 
                         ct2.IDSanPham = ct.IDSanPham;
                         ct2.SoLuong = ct.SoLuong;
-                        ct2.DonGia = ct.DonGia;
                         ct2.ThanhTien = ct2.SoLuong * ct2.DonGia;
 
                         dh.TongTien = dh.TongTien + ct2.ThanhTien;

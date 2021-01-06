@@ -47,6 +47,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                                                    TenDM = d.Ten,
                                                    TenNhom = nh.Ten,
                                                    Mota = s.MoTa,
+                                                   Gia = s.Gia,
                                                    Ten_img = s.Ten_img,
                                                    PathImg = "/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_img
                                                }).ToList();
@@ -70,6 +71,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                                            Ten = s.Ten,
                                            IDNCC = s.IDNCC,
                                            IDDM = s.IDDanhMucSP,
+                                           Gia = s.Gia,
                                            Mota = s.MoTa
                                        }).FirstOrDefault();
                 return Json(sp, JsonRequestBehavior.AllowGet);
@@ -121,7 +123,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     SanPhamViewModel sp = (from sEdit in db.SanPhams
                                            join dEdit in db.DanhMucSanPhams on s.IDDanhMucSP equals d.ID
                                            join nh in db.NhomSanPhams on d.IDNhomSP equals nh.ID
-                                           where (sEdit.ID == s.ID)
+                                           where (sEdit.ID == s.ID && sEdit.IDDanhMucSP == dEdit.ID && dEdit.IDNhomSP == nh.ID)
                                            select new SanPhamViewModel
                                            {
                                                PathImg = "~/storage/" + nh.Ten_slug + "/" + dEdit.Ten_slug + "/" + sEdit.Ten_img
@@ -143,22 +145,25 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     {
                         //Lấy đuôi file ảnh
                         string ex = System.IO.Path.GetExtension(sp.PathImg);
-                        //Copy và lưu file ảnh mặc định cho sản phẩm
-                        System.IO.File.Copy(Server.MapPath(sp.PathImg), Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_slug + ex));
-                        //Lưu đường dẫn
+                        if (!System.IO.File.Exists(Server.MapPath(sp.PathImg)))
+                        {
+                            //Kiểm tra file ảnh để lưu file
+                            System.IO.File.Copy(Server.MapPath(sp.PathImg), Server.MapPath("~/storage/" + n.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_slug + ex));
+                            //Lưu đường dẫn
+                            s.Ten_img = s.Ten_slug + ex;
+                            //Xóa ảnh cũ
+                            System.IO.File.Delete(Server.MapPath(sp.PathImg));
+                        }
                         s.Ten_img = s.Ten_slug + ex;
-
-                        //Xóa ảnh cũ
-                        System.IO.File.Delete(Server.MapPath(sp.PathImg));
                     }
 
                     ss.Ten = s.Ten;
                     ss.Ten_slug = s.Ten_slug;
+                    ss.Gia = s.Gia;
                     ss.MoTa = s.MoTa;
                     ss.IDDanhMucSP = s.IDDanhMucSP;
                     ss.IDNCC = ss.IDNCC;
                     ss.Ten_img = s.Ten_img;
-                    ss.ImgUpload = s.ImgUpload;
 
                     db.SaveChanges();
                     return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
@@ -251,10 +256,11 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
 
                         s.Ten = ((Excel.Range)range.Cells[row, 1]).Text;
                         s.Ten_slug = RemoveUnicode(s.Ten);
-                        s.IDDanhMucSP = GetIDDanhMuc(((Excel.Range)range.Cells[row, 2]).Text);
-                        s.IDNCC = GetIDNhaCungCap(((Excel.Range)range.Cells[row, 4]).Text);
-                        s.Ten_img = ((Excel.Range)range.Cells[row, 5]).Text;
-                        s.MoTa = ((Excel.Range)range.Cells[row, 6]).Text;
+                        s.Gia = decimal.Parse(((Excel.Range)range.Cells[row, 2]).Text);
+                        s.IDDanhMucSP = GetIDDanhMuc(((Excel.Range)range.Cells[row, 3]).Text);
+                        s.IDNCC = GetIDNhaCungCap(((Excel.Range)range.Cells[row, 5]).Text);
+                        s.Ten_img = ((Excel.Range)range.Cells[row, 6]).Text;
+                        s.MoTa = ((Excel.Range)range.Cells[row, 7]).Text;
 
                         db.SanPhams.Add(s);
                     }

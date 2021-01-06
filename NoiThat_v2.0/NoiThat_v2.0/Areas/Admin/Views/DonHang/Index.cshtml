@@ -94,7 +94,7 @@
                     "searchable": false,
                     "width": "15%"
                 }],
-            pageLength: 50
+            pageLength: 10
         });
     });
 
@@ -122,11 +122,6 @@
             $('#IDCT').val(ct.IDCT);
             $('#IDSanPham').val(ct.IDSanPham);
             $('#SoLuong').val(ct.SoLuong);
-            $('#DonGia').val(ct.DonGia);
-
-            $('#ChiTietDHModal').modal('show');
-
-            $('#ModalLabelCTDH').html('Cập nhật thông tin');
         });
     }
 
@@ -146,11 +141,9 @@
         }
         else {
 
-            $('#ID').val('0');
+            $('#IDCT').val('0');
             $('#IDSanPham').val(null);
-
-            $('#ChiTietDHModal').modal('hide');
-            $('#ModalLabelCTDH').html('Thêm đơn hàng');
+            $('#SoLuong').val('');
         }
     }
 

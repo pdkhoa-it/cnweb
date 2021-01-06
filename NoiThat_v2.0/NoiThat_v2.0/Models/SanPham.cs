@@ -29,6 +29,8 @@ namespace NoiThat_v2._0.Models
         [StringLength(100)]
         public string Ten_img { get; set; }
 
+        public decimal Gia { get; set; }
+
         [Required]
         [StringLength(500)]
         public string MoTa { get; set; }

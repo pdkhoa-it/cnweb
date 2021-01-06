@@ -21,34 +21,34 @@ namespace NoiThat_v2._0.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Login lg)
+        public ActionResult Login(string Email, string MatKhau)
         {
             using (DBNoiThat db = new DBNoiThat())
             {
-                if (db.TaiKhoans.Where(p => p.Email == lg.Email).FirstOrDefault() == null)
+                if (db.TaiKhoans.Where(p => p.Email == Email).FirstOrDefault() == null)
                 {
                     return Json(new { success = false, message = "Email không tồn tại!" }, JsonRequestBehavior.AllowGet);
                 }
 
-                TaiKhoan tk = db.TaiKhoans.Where(p => p.Email == lg.Email).FirstOrDefault();
+                TaiKhoan tk = db.TaiKhoans.Where(p => p.Email == Email).FirstOrDefault();
 
-                lg.MatKhau = GetMD5(lg.MatKhau + tk.Salt.ToString());
+                MatKhau = GetMD5(MatKhau + tk.Salt.ToString());
 
-                if (tk.MatKhau != lg.MatKhau)
+                if (MatKhau != tk.MatKhau)
                 {
                     return Json(new { success = false, message = "Mật khẩu không đúng!" }, JsonRequestBehavior.AllowGet);
                 }
 
-                Session["ID"] = tk.ID;
-                
-                if (tk.IDQuyen == 1)
-                {
-                    Session["admin"] = tk.HoTen;
-                    return Json(new { admin = true},JsonRequestBehavior.AllowGet);
-                }
+                UserLogin user = new UserLogin();
+                user.ID = tk.ID;
+                user.Name = tk.HoTen;
+                Session.Add("user",user);
 
-                Session["user"] = tk.HoTen;
-                return Json(new{ user = true},JsonRequestBehavior.AllowGet);
+                if(tk.IDQuyen == 1)
+                {
+                    return Json(new { admin = true }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { user = true }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -56,6 +56,31 @@ namespace NoiThat_v2._0.Controllers
         public void Logout()
         {
             Session.Abandon();
+        }
+
+        [HttpPost]
+        public ActionResult Sign_up(TaiKhoan tk)
+        {
+            using(DBNoiThat db = new DBNoiThat())
+            {
+                if (db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault() != null)
+                {
+                    return Json(new { success = false, message = "Email đã tồn tại! Hãy thử đăng ký với một email khác!" }, JsonRequestBehavior.AllowGet);
+                }
+
+                Random r = new Random();
+                tk.Salt = r.Next(100, 1000);
+                tk.MatKhau = GetMD5(tk.MatKhau + tk.Salt.ToString());
+                tk.XacNhanMatKhau = tk.MatKhau;
+                tk.IDQuyen = 2;
+                db.TaiKhoans.Add(tk);
+                db.SaveChanges();
+
+                Session["user"] = tk.HoTen;
+                Session["ID"] = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault().ID;
+
+                return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+            }    
         }
 
         public string GetMD5(string text)

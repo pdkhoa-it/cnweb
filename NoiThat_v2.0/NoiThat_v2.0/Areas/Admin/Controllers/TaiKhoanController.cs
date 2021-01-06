@@ -84,6 +84,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     tk.Salt = r.Next(100, 1000);
                     tk.MatKhau = GetMD5(tk.MatKhau + tk.Salt.ToString());
                     tk.XacNhanMatKhau = tk.MatKhau;
+                    tk.IDQuyen = 2;
                     db.TaiKhoans.Add(tk);
                     db.SaveChanges();
 

@@ -101,7 +101,9 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     NhomSanPham n = db.NhomSanPhams.Where(p => p.ID == id).FirstOrDefault();
 
                     string f = Server.MapPath(string.Format("~/storage/{0}", n.Ten_slug));
-                    Directory.Delete(f);
+
+                    if(Directory.Exists(f))
+                        Directory.Delete(f);
 
                     db.NhomSanPhams.Remove(n);
                     db.SaveChanges();

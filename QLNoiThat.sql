@@ -76,6 +76,7 @@ create table SanPham
 	Ten nvarchar(100) not null,
 	Ten_slug varchar(100) not null,
 	Ten_img varchar(100) not null,
+	Gia decimal not null,
 	MoTa nvarchar(500) not null,
 	IDNCC int not null,
 	IDDanhMucSP int not null,
@@ -84,10 +85,6 @@ create table SanPham
 	foreign key(IDDanhMucSP) references DanhMucSanPham(ID)
 );
 go
-
-select * from SanPham
-delete from SanPham where id = 46
-
 
 create table DonHang
 (
