@@ -19,21 +19,22 @@ namespace NoiThat_v2._0.Controllers
         {
             using (DBNoiThat db = new DBNoiThat())
             {
-                var list = (from s in db.SanPhams
-                                               join n in db.NhaCungCaps on s.IDNCC equals n.ID
-                                               join d in db.DanhMucSanPhams on s.IDDanhMucSP equals d.ID
-                                               join nh in db.NhomSanPhams on d.IDNhomSP equals nh.ID
-                                               select new SanPhamViewModel
-                                               {
-                                                   ID = s.ID,
-                                                   Ten = s.Ten,
-                                                   Gia = s.Gia,
-                                                   Ten_img = s.Ten_img,
-                                                   PathImg = "/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_img
-                                               }).OrderByDescending(p => p.ID).ToPagedList(page ?? 1,8);
+                List<SanPhamViewModel> list = (from s in db.SanPhams
+                            join n in db.NhaCungCaps on s.IDNCC equals n.ID
+                            join d in db.DanhMucSanPhams on s.IDDanhMucSP equals d.ID
+                            join nh in db.NhomSanPhams on d.IDNhomSP equals nh.ID
+                            select new SanPhamViewModel
+                            {
+                                ID = s.ID,
+                                Ten = s.Ten,
+                                Gia = s.Gia,
+                                IDNhom = d.IDNhomSP,
+                                Ten_img = s.Ten_img,
+                                PathImg = "/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_img
+                            }).OrderByDescending(p => p.ID).ToList();
+
                 return View(list);
             }
         }
-
     }
 }

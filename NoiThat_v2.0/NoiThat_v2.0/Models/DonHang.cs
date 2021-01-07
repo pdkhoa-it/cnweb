@@ -45,6 +45,8 @@ namespace NoiThat_v2._0.Models
 
         public decimal TongTien { get; set; }
 
+        public decimal DaGiamGia { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
     }

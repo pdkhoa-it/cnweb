@@ -17,5 +17,6 @@ namespace NoiThat_v2._0.Areas.Admin.ViewModels
         public byte TinhTrangThanhToan { get; set; }
         public byte TinhTrangGiaoHang { get; set; }
         public decimal TongTien { get; set; }
+        public decimal DaGiamGia { get; set; }
     }
 }

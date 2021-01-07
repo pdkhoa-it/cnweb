@@ -97,7 +97,8 @@ create table DonHang
 	HinhThucThanhToan tinyint not null,
 	TinhTrangThanhToan tinyint not null,
 	TinhTrangGiaoHang tinyint not null,
-	TongTien decimal default 0 not null
+	TongTien decimal default 0 not null,
+	DaGiamGia decimal default 0 not null,
 );
 go
 
@@ -114,3 +115,5 @@ create table ChiTietDonHang
 	foreign key(IDDonhang) references DonHang(ID)
 );
 go
+
+select * from NhomSanPham

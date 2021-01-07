@@ -1,136 +1,129 @@
 ﻿@model NoiThat_v2._0.Models.TaiKhoan
 
 @{
-    ViewBag.Title = "Index";
     Layout = null;
 }
 
-<!-- Sign in / Register Modal -->
-<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+            </div>
             <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="icon-close"></i></span>
-                </button>
-                <div class="form-box">
-                    <div class="form-tab">
-                        <ul class="nav nav-pills nav-fill" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="tab-content-5">
-                            <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                @using (Ajax.BeginForm("Login", "Login", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_Login" }))
-                                {
-                                    <label class="text-danger col-form-label" id="Login_Mess"></label>
+                <div class="row no-gutters">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <!-- Product Slider -->
+                        <div class="product-gallery">
+                            <div class="quickview-slider-active">
+                                <div class="single-slider">
+                                    <img src="https://via.placeholder.com/569x528" alt="#">
+                                </div>
+                                <div class="single-slider">
+                                    <img src="https://via.placeholder.com/569x528" alt="#">
+                                </div>
+                                <div class="single-slider">
+                                    <img src="https://via.placeholder.com/569x528" alt="#">
+                                </div>
+                                <div class="single-slider">
+                                    <img src="https://via.placeholder.com/569x528" alt="#">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Product slider -->
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="quickview-content">
+                            <div class="nav-main">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#DangNhap" role="tab"><h2>Đăng nhập</h2></a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#DangKy" role="tab"><h2>Đăng ký</h2></a></li>
+                                </ul>
+                            </div>
 
-                                    <div class="form-group">
-                                        <label for="singin-email">Email</label>
-                                        @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @type = "email" } })
-                                        @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
-                                    </div><!-- End .form-group -->
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="DangNhap" role="tabpanel">
+                                    <div class="tab-single">
+                                        @using (Ajax.BeginForm("Login", "Login", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_Login" }))
+                                        {
+                                            <label class="text-danger col-form-label" id="Login_Mess"></label>
 
-                                    <div class="form-group">
-                                        <label for="singin-password">Mật khẩu</label>
-                                        @Html.Editor("MatKhau", new { htmlAttributes = new { @class = "form-control", @type = "password" } })
-                                        @Html.ValidationMessage("MatKhau", "", new { @class = "text-danger" })
-                                    </div><!-- End .form-group -->
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control w-50", @type = "email"} })
+                                                @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                                            </div>
 
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2">
-                                            <span>LOG IN</span>
-                                            <i class="icon-long-arrow-right"></i>
-                                        </button>
+                                            <div class="form-group">
+                                                <label>Mật khẩu</label>
+                                                @Html.Editor("MatKhau", new { htmlAttributes = new { @class = "form-control w-50", @type = "password"} })
+                                                @Html.ValidationMessage("MatKhau", "", new { @class = "text-danger" })
+                                            </div>
 
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                            <label class="custom-control-label" for="signin-remember">Remember Me</label>
-                                        </div><!-- End .custom-checkbox -->
+                                            <div class="form-footer">
+                                                <button type="submit" class="btn">Đăng nhập</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="DangKy" role="tabpanel">
+                                    <div class="tab-single">
+                                        @using (Ajax.BeginForm("Sign_up", "Login", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_Sign_up" }))
+                                        {
+                                            <label class="text-danger col-form-label" id="Sign_upMess"></label>
 
-                                        <a href="#" class="forgot-link">Forgot Your Password?</a>
-                                    </div><!-- End .form-footer -->
-                                }
-                            </div><!-- .End .tab-pane -->
-                            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                @using (Ajax.BeginForm("Sign_up", "Login", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_Sign_up" }))
-                                {
-                                    <label class="text-danger col-form-label" id="Sign_upMess"></label>
-
-                                    @Html.Hidden("ID", "0")
-                                    <div class="form-group">
-                                        @Html.Editor("HoTen", new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên" } })
-                                        @Html.ValidationMessage("HoTen", "", new { @class = "text-danger" })
+                                            @Html.Hidden("ID", "0")
+                                            <div class="form-group">
+                                                @Html.Editor("HoTen", new { htmlAttributes = new { @class = "form-control w-50", @placeholder = "Họ và tên" } })
+                                                @Html.ValidationMessage("HoTen", "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control w-50", @type = "email", @placeholder = "Email" } })
+                                                @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Editor("MatKhau", new { htmlAttributes = new { @class = "form-control w-50", @type = "password", @placeholder = "Mật khẩu" } })
+                                                @Html.ValidationMessage("MatKhau", "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Editor("XacNhanMatKhau", new { htmlAttributes = new { @class = "form-control w-50", @type = "password", @placeholder = "Xác nhận mật khẩu" } })
+                                                @Html.ValidationMessage("XacNhanMatKhau", "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn">Đăng ký</button>
+                                            </div>
+                                        }
                                     </div>
-                                    <div class="form-group">
-                                        @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })
-                                        @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Editor("MatKhau", new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Mật khẩu" } })
-                                        @Html.ValidationMessage("MatKhau", "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Editor("XacNhanMatKhau", new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Xác nhận mật khẩu" } })
-                                        @Html.ValidationMessage("XacNhanMatKhau", "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="form-group">
-                                        <select name="GioiTinh" id="GioiTinh" class="form-control">
-                                            <option value="Nam">Nam</option>
-                                            <option value="Nữ">Nữ</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Editor("Sdt", new { htmlAttributes = new { @class = "form-control", @type = "number", @placeholder = "Số điện thoại" } })
-                                        @Html.ValidationMessage("Sdt", "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Editor("NgaySinh", new { htmlAttributes = new { @class = "form-control", @placeholder = "Ngày sinh" } })
-                                        @Html.ValidationMessage("NgaySinh", "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Editor("DiaChi", new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ" } })
-                                        @Html.ValidationMessage("DiaChi", "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-success float-right ml-3" id="btnSubmit" value="Submit" />
-                                        <input type="reset" class="btn btn-secondary float-right" value="Reset" />
-                                    </div>
-                                }
-                            </div><!-- .End .tab-pane -->
-                        </div><!-- End .tab-content -->
-                    </div><!-- End .form-tab -->
-                </div><!-- End .form-box -->
-            </div><!-- End .modal-body -->
-        </div><!-- End .modal-content -->
-    </div><!-- End .modal-dialog -->
-</div><!-- End .modal -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-
-    function Success_Sign_up(dt) {
-        if (dt.success) {
+    function Success_Sign_up(data) {
+        if (data.success) {
             location.reload();
         }
         else {
-            $('#Sign_upMess').html(dt.message);
+            $('#Sign_upMess').html(data.message);
         }
     }
 
-    function Success_Login(dt) {
-        if (dt.admin) {
+    function Success_Login(data) {
+        if (data.admin) {
             window.location.href = "/Admin/Home/Index";
         }
-        if (dt.user) {
+        if (data.user) {
             location.reload();
         }
 
-        if (!dt.success) {
-            $('#Login_Mess').html(dt.message);
+        if (!data.success) {
+            $('#Login_Mess').html(data.message);
         }
     }
 

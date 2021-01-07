@@ -42,12 +42,14 @@ namespace NoiThat_v2._0.Controllers
                 UserLogin user = new UserLogin();
                 user.ID = tk.ID;
                 user.Name = tk.HoTen;
-                Session.Add("user",user);
 
-                if(tk.IDQuyen == 1)
+                if (tk.IDQuyen == 1)
                 {
+                    Session.Add("admin", user);
                     return Json(new { admin = true }, JsonRequestBehavior.AllowGet);
                 }
+                else Session.Add("user",user);
+
                 return Json(new { user = true }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -76,10 +78,14 @@ namespace NoiThat_v2._0.Controllers
                 db.TaiKhoans.Add(tk);
                 db.SaveChanges();
 
-                Session["user"] = tk.HoTen;
-                Session["ID"] = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault().ID;
+                tk.ID = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault().ID;
 
-                return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+                UserLogin user = new UserLogin();
+                user.ID = tk.ID;
+                user.Name = tk.HoTen;
+                Session.Add("user", user);
+
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }    
         }
 

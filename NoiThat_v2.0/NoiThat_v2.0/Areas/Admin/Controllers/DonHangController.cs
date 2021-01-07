@@ -52,7 +52,8 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                                                    DiaChiGiaoHang = d.DiaChiGiaoHang,
                                                    TinhTrangThanhToan = d.TinhTrangThanhToan,
                                                    TinhTrangGiaoHang = d.TinhTrangGiaoHang,
-                                                   TongTien = d.TongTien
+                                                   TongTien = d.TongTien,
+                                                   DaGiamGia = d.DaGiamGia
                                                }).ToList();
                 return Json(new { data = list }, JsonRequestBehavior.AllowGet);
             }
@@ -103,7 +104,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                                            DiaChiGiaoHang = d.DiaChiGiaoHang,
                                            TinhTrangThanhToan = d.TinhTrangThanhToan,
                                            TinhTrangGiaoHang = d.TinhTrangGiaoHang,
-                                           TongTien = d.TongTien
+                                           DaGiamGia = d.DaGiamGia
 
                                        }).FirstOrDefault();
                 return Json(dh, JsonRequestBehavior.AllowGet);
@@ -146,6 +147,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     d.TinhTrangThanhToan = 0;
                     d.TinhTrangGiaoHang = 0;
                     d.TongTien = 0;
+                    d.DaGiamGia = 0;
                     db.DonHangs.Add(d);
                     db.SaveChanges();
                     return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
@@ -154,7 +156,17 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                 {
                     try
                     {
-                        db.Entry(d).State = EntityState.Modified;
+                        DonHang dh = db.DonHangs.Where(p => p.ID == d.ID).FirstOrDefault();
+                        dh.HoTen = d.HoTen;
+                        dh.Sdt = d.Sdt;
+                        dh.Email = d.Email;
+                        dh.ThoiGian = d.ThoiGian;
+                        dh.HinhThucThanhToan = d.HinhThucThanhToan;
+                        dh.TinhTrangThanhToan = d.TinhTrangThanhToan;
+                        dh.TinhTrangGiaoHang = d.TinhTrangGiaoHang;
+                        dh.DaGiamGia = d.DaGiamGia;
+                        dh.TongTien = dh.TongTien - dh.DaGiamGia;
+
                         db.SaveChanges();
                         return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
                     }
@@ -182,7 +194,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     db.ChiTietDonHangs.Add(ct);
 
                     DonHang dh = db.DonHangs.Where(p => p.ID == ct.IDDonHang).FirstOrDefault();
-                    dh.TongTien = dh.TongTien + ct.ThanhTien;
+                    dh.TongTien = dh.TongTien + ct.ThanhTien - dh.DaGiamGia;
 
                     db.SaveChanges();
                     return Json(new { success = true, message = "Thêm mới thành công!" }, JsonRequestBehavior.AllowGet);
@@ -200,7 +212,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                         ct2.SoLuong = ct.SoLuong;
                         ct2.ThanhTien = ct2.SoLuong * ct2.DonGia;
 
-                        dh.TongTien = dh.TongTien + ct2.ThanhTien;
+                        dh.TongTien = dh.TongTien + ct2.ThanhTien - dh.DaGiamGia;
 
                         db.SaveChanges();
                         return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
@@ -242,6 +254,11 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                     ChiTietDonHang ct = db.ChiTietDonHangs.Where(p => p.IDCT == id).FirstOrDefault();
                     DonHang dh = db.DonHangs.Where(p => p.ID == ct.IDDonHang).FirstOrDefault();
                     dh.TongTien = dh.TongTien - ct.ThanhTien;
+                    if(dh.TongTien < 0)
+                    {
+                        dh.TongTien = dh.TongTien + dh.DaGiamGia;
+                        dh.DaGiamGia = 0;
+                    }    
                     db.ChiTietDonHangs.Remove(ct);
                     db.SaveChanges();
                     return Json(new { success = true, message = "Xóa dữ liệu thành công!" }, JsonRequestBehavior.AllowGet);
@@ -294,6 +311,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                         else dh.TinhTrangGiaoHang = 1;
 
                         dh.TongTien = 0;
+                        dh.DaGiamGia = 0;
 
                         db.DonHangs.Add(dh);
                     }

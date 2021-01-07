@@ -46,7 +46,7 @@ namespace NoiThat_v2._0.Areas.Admin.Models
         public virtual DanhMucSanPham DanhMucSanPham { get; set; }
 
         public virtual NhaCungCap NhaCungCap { get; set; }
-
+        
         [NotMapped]
         public HttpPostedFileBase ImgUpload { get; set; }
     }

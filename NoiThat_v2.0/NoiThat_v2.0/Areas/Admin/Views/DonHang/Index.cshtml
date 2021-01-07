@@ -47,13 +47,13 @@
                 {
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
                 {
                     extend: 'pdfHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
                 'colvis'
@@ -86,6 +86,7 @@
                     }
                 },
                 { "data": "TongTien" },
+                { "data": "DaGiamGia" },
                 {
                     "data": "ID", "render": function (id) {
                         return "<a class='btn btn-secondary' onclick = 'ChiTiet(" + id + ")'>Chi Tiết</a><a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/DonHang/Delete')>Delete</a>";
@@ -109,6 +110,7 @@
             $('#ThoiGian').val(dh.ThoiGian);
             $('#DiaChiGiaoHang').val(dh.DiaChiGiaoHang);
             $('#HinhThucThanhToan').val(dh.HinhThucThanhToan);
+            $('#DaGiamGia').val(dh.DaGiamGia);
 
             $('#DonHangModal').modal('show');
 

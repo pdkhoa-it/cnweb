@@ -11,6 +11,7 @@ namespace NoiThat_v2._0.ViewModels
         public string Ten { get; set; }
         public string Ten_img { get; set; }
         public decimal Gia { get; set; }
+        public int IDNhom { get; set; }
         public string PathImg { get; set; }
     }
 }

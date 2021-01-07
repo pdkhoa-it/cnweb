@@ -62,6 +62,10 @@ namespace NoiThat_v2._0.Areas.Admin.Models
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<DonHang>()
+                .Property(e => e.DaGiamGia)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<DonHang>()
                 .HasMany(e => e.ChiTietDonHangs)
                 .WithRequired(e => e.DonHang)
                 .HasForeignKey(e => e.IDDonHang)
