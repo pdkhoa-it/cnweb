@@ -65,7 +65,7 @@
                                                                     </a>
                                                                     <div class="button-head">
                                                                         <div class="product-action">
-                                                                            <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                                            <a  title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                                                             <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                                                             <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                                                         </div>
@@ -108,7 +108,7 @@
                                                                     </a>
                                                                     <div class="button-head">
                                                                         <div class="product-action">
-                                                                            <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                                            <a title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                                                             <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                                                             <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                                                         </div>
@@ -142,5 +142,77 @@
         </div>
     </div>
 </div>
-    
+
 <!-- End Product Area -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="QuickViewModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row no-gutters">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <!-- Product Slider -->
+                        <div class="product-gallery">
+                            <img id="Img" src="#" alt="#" style="height:500px" />
+                        </div>
+                        <!-- End Product slider -->
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="quickview-content">
+                            <h2 id="Ten"></h2>
+                            <h5 id="Gia"></h5>
+                            <div class="quickview-peragraph">
+                                <br/>
+                                <p id="Mota"></p><br/>
+                                <p id="TenDM"></p><br/>
+                                <p id="TenNhom"></p><br/>
+                                <p id="TenNCC"></p>
+                                <br/>
+                            </div>
+                            <div class="add-to-cart">
+                                @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+                                {
+                                    <input type="text" name="ID" id="ID" hidden />
+                                    <button type="submit" class="btn" title="Add to cart">Add to cart</button>
+                                }
+                            </div>
+                            <div class="default-social">
+                                <h4 class="share-now">Share:</h4>
+                                <ul>
+                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                    <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal end -->
+
+<script>
+    function QuickViewModal(ID) {
+        $.get("/TrangChu/GetSanPham", { id: ID }).done(function (sp) {
+
+            $('#Ten').html(sp.Ten);
+            $('#Img').attr("src", "https://" + window.location.host + sp.PathImg);
+            $('#Gia').html('Giá sản phẩm: '+ sp.Gia);
+            $('#Mota').html('Mô tả: ' + sp.Mota);
+            $('#TenDM').html('Danh mục: ' + sp.TenDanhMuc);
+            $('#TenNhom').html('Nhóm: ' + sp.TenNhom);
+            $('#TenNCC').html('Nhà cung cấp: ' + sp.TenNCC);
+            $('#ID').val(sp.ID);
+
+            $('#QuickViewModal').modal('show');
+        });
+    }
+</script>
