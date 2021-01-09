@@ -1,0 +1,157 @@
+﻿@model NoiThat_v2._0.Models.DonHang
+
+@using NoiThat_v2._0.Models
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Checkout -->
+<section class="shop checkout section">
+    @{
+        List<SanPhamCart> cart = (List<SanPhamCart>)Session["cart"];
+
+        if (cart == null || cart.Count == 0)
+        {
+            <div class="container">
+                <h4>Chưa có sản phẩn trong giỏ!</h4>
+                @using (Html.BeginForm("Index", "TrangChu"))
+                {
+                    <button type="submit" class="btn">Về trang chủ</button>
+                }
+            </div>
+        }
+        else
+        {
+            ThanhToan tt = (ThanhToan)Session["thanhtoan"];
+
+            <div class="container">
+                @using (Ajax.BeginForm("AddDonHang", "Checkout", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_Checkout"}))
+                {
+                    <div class="row">
+                        <div class="col-lg-8 col-12">
+                            <div class="checkout-form">
+                                <h2>Make Your Checkout Here</h2>
+                                <p>Please register in order to checkout more quickly</p>
+
+                                @if (Session["user"] == null)
+                                {
+                                    <div class="form">
+                                        <div class="form-group w-75">
+                                            <label>Họ và tên<span>*</span></label>
+                                            @Html.Editor("HoTen", new { htmlAttributes = new { @class = "form-control", @type = "text"} })
+                                            @Html.ValidationMessage("HoTen", "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group w-75">
+                                            <label>Số điện thoại<span>*</span></label>
+                                            @Html.Editor("Sdt", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                            @Html.ValidationMessage("Sdt", "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group w-75">
+                                            <label>Email<span>*</span></label>
+                                            @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                                            @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group w-75">
+                                            <label>Địa chỉ<span>*</span></label>
+                                            @Html.Editor("DiaChiGiaoHang", new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                                            @Html.ValidationMessage("DiaChiGiaoHang", "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div class="form-group create-account">
+                                            <input name="AddTaiKhoan" id="AddTaiKhoan" type="checkbox" value="Add"/>
+                                            <label>Tạo tài khoản</label><br />
+                                            <span class="text-danger">*</span><label>Mặc định tên đăng nhập là Email và mật khẩu là Số điện thoại</label>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    TaiKhoan item = (TaiKhoan)Session["user"];
+                                    <div class="form">
+                                        <div class="form-group w-75">
+                                            <label>Họ và tên<span>*</span></label>
+                                            @Html.Editor("HoTen", "123456", new { htmlAttributes = new { @class = "form-control", @Value = item.HoTen, @type = "text"}})
+                                            @Html.ValidationMessage("HoTen", "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group w-75">
+                                            <label>Số điện thoại<span>*</span></label>
+                                            @Html.Editor("Sdt", new { htmlAttributes = new { @class = "form-control", @Value = item.Sdt, @type = "number" } })
+                                            @Html.ValidationMessage("Sdt", "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group w-75">
+                                            <label>Email<span>*</span></label>
+                                            @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @Value = item.Email, @type = "email" } })
+                                            @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group w-75">
+                                            <label>Địa chỉ<span>*</span></label>
+                                            @Html.Editor("DiaChiGiaoHang", new { htmlAttributes = new { @class = "form-control", @Value = item.DiaChi, @type = "text" } })
+                                            @Html.ValidationMessage("DiaChiGiaoHang", "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <div class="order-details">
+                                <!-- Order Widget -->
+                                <div class="single-widget">
+                                    <h2>Chi phí thanh toán</h2>
+                                    <div class="content">
+                                        <ul>
+                                            <li>Tổng tiền<span>@tt.TongTien</span></li>
+                                            <li>Phí vận chuyển<span>Free</span></li>
+                                            <li>Giảm giá<span>@tt.GiamGia</span></li>
+                                            <li class="last">Cần thanh toán<span>@tt.CanThanhToan</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--/ End Order Widget -->
+                                <!-- Order Widget -->
+                                <div class="single-widget">
+                                    <h2>Hình thức thanh toán</h2>
+                                    <div class="content">
+                                        <div class="custom-radio">
+                                            <label class="p-4"><input checked name="HinhThucThanhToan" value="0" type="radio"> Thanh toán khi nhận hàng</label><br />
+                                            <label class="pl-4"><input name="HinhThucThanhToan" value="1" type="radio"> Chuyển khoản</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/ End Order Widget -->
+                                <!-- Payment Method Widget -->
+                                <div class="single-widget payement">
+                                    <div class="content">
+                                        <img src="images/payment-method.png" alt="#">
+                                    </div>
+                                </div>
+                                <!--/ End Payment Method Widget -->
+                                <!-- Button Widget -->
+                                <div class="single-widget get-button">
+                                    <div class="content">
+                                        <div class="button">
+                                            <button type="submit" class="btn">Xác nhận</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/ End Button Widget -->
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</section>
+<!--/ End Checkout -->
+
+
+
+<script>
+    function Success_Checkout(data) {
+        if (data.success) {
+            window.location.href = "/TrangChu/Index";
+        }
+    }
+</script>

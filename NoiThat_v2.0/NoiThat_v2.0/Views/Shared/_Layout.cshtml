@@ -92,8 +92,8 @@
                                 @{
                                     if (Session["user"] != null)
                                     {
-                                        UserLogin item = (UserLogin)Session["user"];
-                                        <li><i class="ti-user"></i> <a href="#">@item.Name</a></li>
+                                        TaiKhoan item = (TaiKhoan)Session["user"];
+                                        <li><i class="ti-user"></i> <a href="#">@item.HoTen</a></li>
                                         <li><i class="ti-power-off"></i><a href="#" onclick="Logout()">Logout</a></li>
                                     }
                                     else 
@@ -181,7 +181,7 @@
                                                     <span>Total</span>
                                                     <span class="total-amount">0 VND</span>
                                                 </div>
-                                                <a href="checkout.html" class="btn animate">Checkout</a>
+                                                <a href="@Url.Action("Checkout", "Checkout")" class="btn animate">Checkout</a>
                                             </div>
                                         </div>
                                     }
@@ -214,7 +214,7 @@
                                                     <span>Total</span>
                                                     <span class="total-amount">@tt.TongTien VND</span>
                                                 </div>
-                                                <a href="checkout.html" class="btn animate">Checkout</a>
+                                                <a href="@Url.Action("Checkout", "Checkout")" class="btn animate">Checkout</a>
                                             </div>
                                         </div>
                                     }

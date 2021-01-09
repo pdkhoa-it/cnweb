@@ -163,6 +163,7 @@
     <Compile Include="Areas\Admin\ViewModels\SanPhamViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\TaiKhoanViewModel.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,7 +180,6 @@
     <Compile Include="Models\SanPhamCart.cs" />
     <Compile Include="Models\TaiKhoan.cs" />
     <Compile Include="Models\ThanhToan.cs" />
-    <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SanPhamViewModel.cs" />
   </ItemGroup>
@@ -2013,6 +2013,7 @@
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Cart\Cart.cshtml" />
+    <Content Include="Views\Checkout\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

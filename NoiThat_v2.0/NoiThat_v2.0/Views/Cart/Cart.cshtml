@@ -11,11 +11,11 @@
 <div class="shopping-cart section">
 
     @{
-            List<SanPhamCart> cart = (List<SanPhamCart>)Session["cart"];
-            ThanhToan tt = (ThanhToan)Session["thanhtoan"];
+        List<SanPhamCart> cart = (List<SanPhamCart>)Session["cart"];
+        ThanhToan tt = (ThanhToan)Session["thanhtoan"];
 
-            if (cart == null || cart.Count == 0)
-            {
+        if (cart == null || cart.Count == 0)
+        {
         <div class="container">
             <h4>Chưa có sản phẩn trong giỏ!</h4>
             @using(Html.BeginForm("Index", "TrangChu"))
@@ -113,7 +113,7 @@
                                             <li class="last">Cần thanh toán<span>@tt.CanThanhToan</span></li>
                                         </ul>
                                         <div class="button5">
-                                            <a href="#" class="btn">Thanh toán</a>
+                                            <a href="@Url.Action("Checkout", "Checkout")" class="btn">Thanh toán</a>
                                             <a href="@Url.Action("Index", "TrangChu")" class="btn">Tiếp tục mua hàng</a>
                                         </div>
                                     </div>

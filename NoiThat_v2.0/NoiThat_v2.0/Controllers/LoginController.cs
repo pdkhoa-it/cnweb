@@ -39,16 +39,12 @@ namespace NoiThat_v2._0.Controllers
                     return Json(new { success = false, message = "Mật khẩu không đúng!" }, JsonRequestBehavior.AllowGet);
                 }
 
-                UserLogin user = new UserLogin();
-                user.ID = tk.ID;
-                user.Name = tk.HoTen;
-
                 if (tk.IDQuyen == 1)
                 {
-                    Session.Add("admin", user);
+                    Session.Add("admin", tk);
                     return Json(new { admin = true }, JsonRequestBehavior.AllowGet);
                 }
-                else Session.Add("user",user);
+                else Session.Add("user",tk);
 
                 return Json(new { user = true }, JsonRequestBehavior.AllowGet);
             }
@@ -57,7 +53,7 @@ namespace NoiThat_v2._0.Controllers
         [HttpPost]
         public void Logout()
         {
-            Session.Abandon();
+            Session.Remove("user");
         }
 
         [HttpPost]
@@ -78,12 +74,9 @@ namespace NoiThat_v2._0.Controllers
                 db.TaiKhoans.Add(tk);
                 db.SaveChanges();
 
-                tk.ID = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault().ID;
+                tk = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault();
 
-                UserLogin user = new UserLogin();
-                user.ID = tk.ID;
-                user.Name = tk.HoTen;
-                Session.Add("user", user);
+                Session.Add("user", tk);
 
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }    

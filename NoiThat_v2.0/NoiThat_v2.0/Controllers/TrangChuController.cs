@@ -33,6 +33,10 @@ namespace NoiThat_v2._0.Controllers
                                 PathImg = "/storage/" + nh.Ten_slug + "/" + d.Ten_slug + "/" + s.Ten_img
                             }).OrderByDescending(p => p.ID).ToList();
 
+                List<NhomSanPham> nhom = db.NhomSanPhams.ToList();
+
+                Session.Add("nhom", nhom);
+
                 return View(list);
             }
         }
