@@ -20,7 +20,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>@ViewBag.Title</title>
 
     <!--Liên kết font SB Admin 2-->
     <link href="~/Content/Admin/Layout/vendor/fontawesome-free/css/all.css" rel="stylesheet" />
@@ -324,13 +324,13 @@
     <!--Thư viện của SB Admin 2-->
     <script src="~/Content/Admin/Layout/js/sb-admin-2.js"></script>
 
+
     <script>
         function Logout() {
             $.noConflict();
-            $.post("/Login/Logout").done(
-                window.location.href = "/TrangChu/Index"
-            );
+            $.post("/Login/Logout").done(window.location.href = "/TrangChu/Index");
         }
     </script>
+
     </body>
 </html>

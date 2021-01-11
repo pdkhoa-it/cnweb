@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Contact -->
+<section id="contact-us" class="contact-us section">
+    <div class="container">
+        <div class="contact-head">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="form-main">
+                        <div class="title">
+                            <h4>Liên lạc</h4>
+                            <h3>Nhắn tin cho chúng tôi</h3>
+                        </div>
+                        <form class="form" method="post" action="mail/mail.php">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <label>Tên của bạn<span>*</span></label>
+                                        <input name="name" type="text" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <label>Email<span>*</span></label>
+                                        <input name="email" type="email" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <label>Số điện thoại<span>*</span></label>
+                                        <input name="company_name" type="text" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group message">
+                                        <label>Nội dung<span>*</span></label>
+                                        <textarea name="message" placeholder=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group button">
+                                        <button type="submit" class="btn ">Gửi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="single-head">
+                        <div class="single-info">
+                            <i class="fa fa-phone"></i>
+                            <h4 class="title">Gọi chúng tôi 24/7:</h4>
+                            <ul>
+                                <li> +(84) 01234 5678</li>
+                                <li> +(84) 3456 7890</li>
+                            </ul>
+                        </div>
+                        <div class="single-info">
+                            <i class="fa fa-envelope-open"></i>
+                            <h4 class="title">Email:</h4>
+                            <ul>
+                                <li><a href="mailto:info@eshop.com">info@eshop.com</a></li>
+                                <li><a href="mailto:support@eshop.com">support@eshop.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="single-info">
+                            <i class="fa fa-location-arrow"></i>
+                            <h4 class="title">Địa chỉ:</h4>
+                            <ul>
+                                <li>Số 128 Trần Hưng Đạo - Long Xuyên - An Giang - Việt Nam.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ End Contact -->
+<!-- Start Shop Newsletter  -->
+<section class="shop-newsletter section pt-0">
+    <div class="container">
+        <div class="inner-top">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <!-- Start Newsletter Inner -->
+                    <div class="inner">
+                        <h4>Nhận tin mới</h4>
+                        <p> Đăng ký bản tin qua email và nhận giảm <span>10%</span> trong lần mua hàng đầu tiên</p>
+                        <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                            <input name="EMAIL" placeholder="Địa chỉ mail của bạn" required="" type="email">
+                            <button class="btn">Đăng ký</button>
+                        </form>
+                    </div>
+                    <!-- End Newsletter Inner -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Shop Newsletter -->

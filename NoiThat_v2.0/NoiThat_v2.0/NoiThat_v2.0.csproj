@@ -162,10 +162,14 @@
     <Compile Include="Areas\Admin\ViewModels\PhanQuyenViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\SanPhamViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\TaiKhoanViewModel.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ShopGridController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1865,13 +1869,13 @@
     <Content Include="Content\User\css\jquery.fancybox.min.css" />
     <Content Include="Content\User\css\magnific-popup.css" />
     <Content Include="Content\User\css\magnific-popup.min.css" />
+    <Content Include="Content\User\css\myStyle.css" />
     <Content Include="Content\User\css\nice-select.css" />
     <Content Include="Content\User\css\niceselect.css" />
     <Content Include="Content\User\css\owl-carousel.css" />
     <Content Include="Content\User\css\reset.css" />
     <Content Include="Content\User\css\responsive.css" />
     <Content Include="Content\User\css\slicknav.min.css" />
-    <Content Include="Content\User\css\style.css" />
     <Content Include="Content\User\css\themify-icons.css" />
     <Content Include="Content\User\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\User\fonts\themify.svg" />
@@ -1879,8 +1883,6 @@
     <Content Include="Content\User\images\logo.png" />
     <Content Include="Content\User\images\logo2.png" />
     <Content Include="Content\User\images\map-marker.png" />
-    <Content Include="Content\User\images\payment-method.png" />
-    <Content Include="Content\User\images\payments.png" />
     <Content Include="Content\User\js\active.js" />
     <Content Include="Content\User\js\bootstrap.min.js" />
     <Content Include="Content\User\js\easing.js" />
@@ -2014,6 +2016,10 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Cart\Cart.cshtml" />
     <Content Include="Views\Checkout\Checkout.cshtml" />
+    <Content Include="Views\ShopGrid\ShopGrid.cshtml" />
+    <Content Include="Views\Blog\Blog.cshtml" />
+    <Content Include="Views\Contact\Contact.cshtml" />
+    <Content Include="Views\User\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

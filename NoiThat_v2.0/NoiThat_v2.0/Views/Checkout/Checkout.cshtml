@@ -3,7 +3,7 @@
 @using NoiThat_v2._0.Models
 
 @{
-    ViewBag.Title = "Checkout";
+    ViewBag.Title = "Thanh toán";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,13 +14,14 @@
 
         if (cart == null || cart.Count == 0)
         {
-            <div class="container">
-                <h4>Chưa có sản phẩn trong giỏ!</h4>
-                @using (Html.BeginForm("Index", "TrangChu"))
-                {
-                    <button type="submit" class="btn">Về trang chủ</button>
-                }
-            </div>
+        <div class="container">
+            <h4>Chưa có sản phẩm để thanh toán!</h4>
+            @using (Html.BeginForm("Index", "TrangChu"))
+            {
+                <button type="submit" class="btn m-5">Về trang chủ</button>
+            }
+
+        </div>
         }
         else
         {
@@ -101,10 +102,10 @@
                                     <h2>Chi phí thanh toán</h2>
                                     <div class="content">
                                         <ul>
-                                            <li>Tổng tiền<span>@tt.TongTien</span></li>
+                                            <li>Tổng tiền<span>@tt.TongTien.ToString("N0")</span></li>
                                             <li>Phí vận chuyển<span>Free</span></li>
-                                            <li>Giảm giá<span>@tt.GiamGia</span></li>
-                                            <li class="last">Cần thanh toán<span>@tt.CanThanhToan</span></li>
+                                            <li>Giảm giá<span>@tt.GiamGia.ToString("N0")</span></li>
+                                            <li class="last">Cần thanh toán<span>@tt.CanThanhToan.ToString("N0") VND</span></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -53,7 +53,10 @@ namespace NoiThat_v2._0.Controllers
         [HttpPost]
         public void Logout()
         {
-            Session.Remove("user");
+            if (Session["user"] != null)
+                Session.Remove("user");
+            if (Session["admin"] != null)
+                Session.Remove("admin");
         }
 
         [HttpPost]

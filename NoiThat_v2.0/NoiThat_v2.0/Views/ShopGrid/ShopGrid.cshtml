@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    Đây là trang Shop Grid
+</div>
+
+<!-- Start Shop Newsletter  -->
+<section class="shop-newsletter section">
+    <div class="container">
+        <div class="inner-top">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <!-- Start Newsletter Inner -->
+                    <div class="inner">
+                        <h4>Nhận tin mới</h4>
+                        <p> Đăng ký bản tin qua email và nhận giảm <span>10%</span> trong lần mua hàng đầu tiên</p>
+                        <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                            <input name="EMAIL" placeholder="Địa chỉ mail của bạn" required="" type="email">
+                            <button class="btn">Đăng ký</button>
+                        </form>
+                    </div>
+                    <!-- End Newsletter Inner -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Shop Newsletter -->

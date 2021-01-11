@@ -3,17 +3,43 @@
 @using NoiThat_v2._0.Models
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Slider Area -->
+<section class="hero-slider">
+    <!-- Single Slider -->
+    <div class="single-slider">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-9 offset-lg-3 col-12">
+                    <div class="text-inner">
+                        <div class="row">
+                            <div class="col-lg-7 col-12">
+                                <div class="hero-text">
+                                    <h1><span>GIẢM 15% </span>TẤT CẢ NỘI THẤT PHÒNG KHÁCH </h1>
+                                    <div class="button">
+                                        <a href="@Url.Action("ShopGrid", "ShopGrid")" class="btn">Tới Cửa Hàng!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Single Slider -->
+</section>
+<!--/ End Slider Area -->
 <!-- Start Product Area -->
 <div class="product-area section">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2>Trending Item</h2>
+                    <h2>Sản phẩm nổi bật</h2>
                 </div>
             </div>
         </div>
@@ -65,7 +91,7 @@
                                                                     </a>
                                                                     <div class="button-head">
                                                                         <div class="product-action">
-                                                                            <a  title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                                            <a title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                                                             <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                                                             <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                                                         </div>
@@ -80,7 +106,7 @@
                                                                 <div class="product-content">
                                                                     <h3><a href="product-details.html">@item.Ten</a></h3>
                                                                     <div class="product-price">
-                                                                        <span>@item.Gia</span>
+                                                                        <span>@item.Gia.ToString("N0") VND</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -123,7 +149,7 @@
                                                                 <div class="product-content">
                                                                     <h3><a href="product-details.html">@item.Ten</a></h3>
                                                                     <div class="product-price">
-                                                                        <span>@item.Gia</span>
+                                                                        <span>@item.Gia.ToString("N0") VND</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -143,9 +169,123 @@
     </div>
 </div>
 
-<!-- End Product Area -->
+<!-- End Product Area-->
 
+<!-- Start Shop Blog  -->
+<section class="shop-blog section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Xu Hướng</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12">
+                <!-- Start Single Blog  -->
+                <div class="shop-single-blog">
+                    <img src="~/Content/User/images/codien.png" alt="#">
+                    <div class="content">
+                        <p class="date">Thứ 2, 22/11/2020</p>
+                        <a href="@Url.Action("Blog", "Blog")" class="title">Xu hướng cổ điển</a>
 
+                    </div>
+                </div>
+                <!-- End Single Blog  -->
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
+                <!-- Start Single Blog  -->
+                <div class="shop-single-blog">
+                    <img src="~/Content/User/images/tancodien.png" alt="#">
+                    <div class="content">
+                        <p class="date">Thứ 7, 4/1/2021</p>
+                        <a href="@Url.Action("Blog", "Blog")" class="title">Xu hướng tân cổ điển</a>
+                    </div>
+                </div>
+                <!-- End Single Blog  -->
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
+                <!-- Start Single Blog  -->
+                <div class="shop-single-blog">
+                    <img src="~/Content/User/images/hiendai.png" alt="#">
+                    <div class="content">
+                        <p class="date">Chủ nhật, 10/1/2020</p>
+                        <a href="@Url.Action("Blog", "Blog")" class="title">Phong cách hiện đại</a>
+                    </div>
+                </div>
+                <!-- End Single Blog  -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Shop Blog  -->
+<!-- Start Shop Services Area -->
+<section class="shop-services section home">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Service -->
+                <div class="single-service">
+                    <i class="ti-rocket"></i>
+                    <h4>Free shiping</h4>
+                    <p>Đơn hàng từ 9.900.000 vnđ</p>
+                </div>
+                <!-- End Single Service -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Service -->
+                <div class="single-service">
+                    <i class="ti-reload"></i>
+                    <h4>Miễn phí đổi trả</h4>
+                    <p>15 ngày kể từ ngày mua </p>
+                </div>
+                <!-- End Single Service -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Service -->
+                <div class="single-service">
+                    <i class="ti-lock"></i>
+                    <h4>Thanh toán an toàn</h4>
+                    <p>100% có hóa đơn đỏ</p>
+                </div>
+                <!-- End Single Service -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Service -->
+                <div class="single-service">
+                    <i class="ti-tag"></i>
+                    <h4>Giá tốt nhất</h4>
+                    <p>Giá cả tốt nhất thị trường</p>
+                </div>
+                <!-- End Single Service -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Shop Services Area -->
+<!-- Start Shop Newsletter  -->
+<section class="shop-newsletter section">
+    <div class="container">
+        <div class="inner-top">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <!-- Start Newsletter Inner -->
+                    <div class="inner">
+                        <h4>Nhận tin mới</h4>
+                        <p> Đăng ký bản tin qua email và nhận giảm <span>10%</span> trong lần mua hàng đầu tiên</p>
+                        <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                            <input name="EMAIL" placeholder="Địa chỉ mail của bạn" required="" type="email">
+                            <button class="btn">Đăng ký</button>
+                        </form>
+                    </div>
+                    <!-- End Newsletter Inner -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Shop Newsletter -->
 <!-- Modal -->
 <div class="modal fade" id="QuickViewModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -167,12 +307,12 @@
                             <h2 id="Ten"></h2>
                             <h5 id="Gia"></h5>
                             <div class="quickview-peragraph">
-                                <br/>
-                                <p id="Mota"></p><br/>
-                                <p id="TenDM"></p><br/>
-                                <p id="TenNhom"></p><br/>
+                                <br />
+                                <p id="Mota"></p><br />
+                                <p id="TenDM"></p><br />
+                                <p id="TenNhom"></p><br />
                                 <p id="TenNCC"></p>
-                                <br/>
+                                <br />
                             </div>
                             <div class="add-to-cart">
                                 @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
@@ -205,7 +345,7 @@
 
             $('#Ten').html(sp.Ten);
             $('#Img').attr("src", "https://" + window.location.host + sp.PathImg);
-            $('#Gia').html('Giá sản phẩm: '+ sp.Gia);
+            $('#Gia').html('Giá sản phẩm: ' + sp.Gia.toLocaleString() + ' VND');
             $('#Mota').html('Mô tả: ' + sp.Mota);
             $('#TenDM').html('Danh mục: ' + sp.TenDanhMuc);
             $('#TenNhom').html('Nhóm: ' + sp.TenNhom);

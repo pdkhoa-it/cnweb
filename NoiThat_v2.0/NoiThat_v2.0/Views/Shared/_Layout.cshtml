@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Title Tag  -->
-    <title>Eshop - eCommerce HTML5 Template.</title>
+    <title>@ViewBag.Title</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="~/Content/User/images/favicon.png">
     <!-- Web Font -->
@@ -49,7 +49,7 @@
 
     <!-- Eshop StyleSheet -->
     <link href="~/Content/User/css/reset.css" rel="stylesheet" />
-    <link href="~/Content/User/css/style.css" rel="stylesheet" />
+    <link href="~/Content/User/css/myStyle.css" rel="stylesheet" />
     <link href="~/Content/User/css/responsive.css" rel="stylesheet" />
 
 
@@ -77,8 +77,8 @@
                         <!-- Top Left -->
                         <div class="top-left">
                             <ul class="list-main">
-                                <li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-                                <li><i class="ti-email"></i> support@shophub.com</li>
+                                <li><i class="ti-headphone-alt"></i> +84 123 456 789</li>
+                                <li><i class="ti-email"></i> support@eshop.com</li>
                             </ul>
                         </div>
                         <!--/ End Top Left -->
@@ -87,18 +87,18 @@
                         <!-- Top Right -->
                         <div class="right-content">
                             <ul class="list-main">
-                                <li><i class="ti-location-pin"></i> Store location</li>
-                                <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
                                 @{
                                     if (Session["user"] != null)
                                     {
                                         TaiKhoan item = (TaiKhoan)Session["user"];
-                                        <li><i class="ti-user"></i> <a href="#">@item.HoTen</a></li>
-                                        <li><i class="ti-power-off"></i><a href="#" onclick="Logout()">Logout</a></li>
+                                        <li><i class="ti-user"></i> <a href="@Url.Action("User", "User")">@item.HoTen</a></li>
+                                        <li><i class="ti-power-off"></i><a href="#" onclick="Logout()">Đăng xuất</a></li>
                                     }
-                                    else 
-                                    { 
-                                        <li><i class="ti-power-off"></i><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
+                                    else
+                                    {
+
+                                        <li><i class="ti-user"></i> <label>Chưa đăng nhập</label></li>
+                                        <li><i class="ti-power-off"></i><a href="#" data-toggle="modal" data-target="#LoginModal">Đăng nhập</a></li>
                                     }
                                 }
                             </ul>
@@ -115,35 +115,28 @@
                     <div class="col-lg-2 col-md-2 col-12">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="~/Content/User/images/logo.png" alt="logo"></a>
+                            <a href="@Url.Action("Index", "TrangChu")"><img src="~/Content/User/images/logo.png" alt="logo"></a>
                         </div>
                         <!--/ End Logo -->
-                        <!-- Search Form -->
-                        <div class="search-top">
-                            <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
-                            <!-- Search Form -->
-                            <div class="search-top">
-                                <form class="search-form">
-                                    <input type="text" placeholder="Search here..." name="search">
-                                    <button value="search" type="submit"><i class="ti-search"></i></button>
-                                </form>
-                            </div>
-                            <!--/ End Search Form -->
-                        </div>
-                        <!--/ End Search Form -->
                         <div class="mobile-nav"></div>
                     </div>
                     <div class="col-lg-8 col-md-7 col-12">
                         <div class="search-bar-top">
                             <div class="search-bar">
                                 <select>
-                                    <option selected="selected">All Category</option>
-                                    <option>watch</option>
-                                    <option>mobile</option>
-                                    <option>kid’s item</option>
+                                    <option selected="selected">Tất cả</option>
+                                    @{
+                                        if (Session["nhom"] != null)
+                                        {
+                                            foreach (var item in (List<NhomSanPham>)Session["nhom"])
+                                            {
+                                                <option>@item.Ten</option>
+                                            }
+                                        }
+                                    }
                                 </select>
                                 <form>
-                                    <input name="search" placeholder="Search Products Here....." type="search">
+                                    <input name="search" placeholder="Tìm kiếm..." type="search">
                                     <button class="btnn"><i class="ti-search"></i></button>
                                 </form>
                             </div>
@@ -160,16 +153,16 @@
                             </div>
                             <div class="sinlge-bar shopping">
                                 @{
-                                        List<SanPhamCart> cart = (List<SanPhamCart>)Session["cart"];
-                                        ThanhToan tt = (ThanhToan)Session["thanhtoan"];
-                                        if (cart == null || cart.Count == 0)
-                                        {
+                                    List<SanPhamCart> cart = (List<SanPhamCart>)Session["cart"];
+                                    ThanhToan tt = (ThanhToan)Session["thanhtoan"];
+                                    if (cart == null || cart.Count == 0)
+                                    {
                                         <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">0</span></a>
                                         <!-- Shopping Item -->
                                         <div class="shopping-item">
                                             <div class="dropdown-cart-header">
                                                 <span>0 sản phẩm</span>
-                                                <a href="@Url.Action("Cart", "Cart")">View Cart</a>
+                                                <a href="@Url.Action("Cart", "Cart")">Xem giỏ hàng</a>
                                             </div>
                                             <ul class="shopping-list">
                                                 <li>
@@ -178,10 +171,10 @@
                                             </ul>
                                             <div class="bottom">
                                                 <div class="total">
-                                                    <span>Total</span>
+                                                    <span>Tạm tính</span>
                                                     <span class="total-amount">0 VND</span>
                                                 </div>
-                                                <a href="@Url.Action("Checkout", "Checkout")" class="btn animate">Checkout</a>
+                                                <a href="@Url.Action("Checkout", "Checkout")" class="btn animate">Thanh toán</a>
                                             </div>
                                         </div>
                                     }
@@ -192,10 +185,11 @@
                                         <div class="shopping-item">
                                             <div class="dropdown-cart-header">
                                                 <span>@cart.Count sản phẩm</span>
-                                                <a href="@Url.Action("Cart", "Cart")">View Cart</a>
+                                                <a href="@Url.Action("Cart", "Cart")">Xem giỏ hàng</a>
                                             </div>
                                             <ul class="shopping-list">
-                                                @foreach (SanPhamCart item in cart) {
+                                                @foreach (SanPhamCart item in cart)
+                                                {
                                                     <li>
 
                                                         @using (Html.BeginForm("DeleteCart", "Cart", new { ID = item.ID }, FormMethod.Post))
@@ -205,16 +199,16 @@
 
                                                         <a class="cart-img" href="#"><img src="@Url.Content(item.PathImg)" alt="#"></a>
                                                         <h4><a href="#">@item.Ten</a></h4>
-                                                        <p class="quantity">@item.SoLuong x <span class="amount">@item.Gia = @(item.SoLuong * item.Gia) VND</span></p>
+                                                        <p class="quantity">@item.SoLuong x <span class="amount">@item.Gia.ToString("N0") = @((item.SoLuong * item.Gia).ToString("N0")) VND</span></p>
                                                     </li>
                                                 }
                                             </ul>
                                             <div class="bottom">
                                                 <div class="total">
-                                                    <span>Total</span>
-                                                    <span class="total-amount">@tt.TongTien VND</span>
+                                                    <span>Tạm tính</span>
+                                                    <span class="total-amount">@tt.TongTien.ToString("N0") VND</span>
                                                 </div>
-                                                <a href="@Url.Action("Checkout", "Checkout")" class="btn animate">Checkout</a>
+                                                <a href="@Url.Action("Checkout", "Checkout")" class="btn animate">Thanh toán</a>
                                             </div>
                                         </div>
                                     }
@@ -231,36 +225,25 @@
             <div class="container">
                 <div class="cat-nav-head">
                     <div class="row">
-                        <div class="menu-area">
-                            <!-- Main Menu -->
-                            <nav class="navbar navbar-expand-lg">
-                                <div class="navbar-collapse">
-                                    <div class="nav-inner">
-                                        <ul class="nav main-menu menu navbar-nav">
-                                            <li class="active"><a href="#">Home</a></li>
-                                            <li><a href="#">Product</a></li>
-                                            <li><a href="#">Service</a></li>
-                                            <li>
-                                                <a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Pages</a></li>
-                                            <li>
-                                                <a href="#">Blog<i class="ti-angle-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                        </ul>
+                        <div class="col-lg-12 col-12">
+                            <div class="menu-area">
+                                <!-- Main Menu -->
+                                <nav class="navbar navbar-expand-lg">
+                                    <div class="navbar-collapse">
+                                        <div class="nav-inner">
+                                            <ul class="nav main-menu menu navbar-nav">
+                                                <li class="active"><a href="@Url.Action("Index", "TrangChu")">Trang Chủ</a></li>
+                                                <li><a href="@Url.Action("ShopGrid", "ShopGrid")">Cửa Hàng<span class="new">New</span></a></li>
+                                                <li><a href="@Url.Action("Cart", "Cart")">Giỏ Hàng</a></li>
+                                                <li><a href="@Url.Action("Checkout", "Checkout")">Thanh Toán</a></li>
+                                                <li><a href="@Url.Action("Blog", "Blog")">Blog</a></li>
+                                                <li><a href="@Url.Action("Contact", "Contact")">Liên Hệ</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </nav>
-                            <!--/ End Main Menu -->
+                                </nav>
+                                <!--/ End Main Menu -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -284,23 +267,22 @@
                         <!-- Single Widget -->
                         <div class="single-footer about">
                             <div class="logo">
-                                <a href="index.html"><img src="~/Content/User/images/logo2.png" alt="#"></a>
+                                <a href="@Url.Action("Index", "TrangChu")"><img src="~/Content/User/images/logo2.png" alt="#"></a>
                             </div>
-                            <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                            <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
+                            <p class="text">Hãy biến ý tưởng của bạn thành hiện thực với các chương trình giảm giá đặc biệt, nguồn cảm hứng và rất nhiều ý tưởng mới trong cửa hàng. Hoàn toàn miễn phí.</p>
+                            <p class="call">Mọi thắc mắc? Gọi chúng tôi 24/7<span><a href="tel:123456789">+(84) 01234 5678</a></span></p>
                         </div>
                         <!-- End Single Widget -->
                     </div>
                     <div class="col-lg-2 col-md-6 col-12">
                         <!-- Single Widget -->
                         <div class="single-footer links">
-                            <h4>Information</h4>
+                            <h4>Thông tin</h4>
                             <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Faq</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Help</a></li>
+                                <li><a href="contact.html">Liên hệ</a></li>
+                                <li><a href="#">Đại lý</a></li>
+                                <li><a href="#">Cộng tác viên</a></li>
+                                <li><a href="#">Trợ giúp</a></li>
                             </ul>
                         </div>
                         <!-- End Single Widget -->
@@ -308,13 +290,12 @@
                     <div class="col-lg-2 col-md-6 col-12">
                         <!-- Single Widget -->
                         <div class="single-footer links">
-                            <h4>Customer Service</h4>
+                            <h4>Chính sách</h4>
                             <ul>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Money-back</a></li>
-                                <li><a href="#">Returns</a></li>
-                                <li><a href="#">Shipping</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Cam kết chất lượng</a></li>
+                                <li><a href="#">Chính sách bảo hành</a></li>
+                                <li><a href="#">Chính sách đổi trả</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
                             </ul>
                         </div>
                         <!-- End Single Widget -->
@@ -322,14 +303,15 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <!-- Single Widget -->
                         <div class="single-footer social">
-                            <h4>Get In Tuch</h4>
+                            <h4>Liên lạc</h4>
                             <!-- Single Widget -->
                             <div class="contact">
                                 <ul>
-                                    <li>NO. 342 - London Oxford Street.</li>
-                                    <li>012 United Kingdom.</li>
+                                    <li>Số 128</li>
+                                    <li>Trần Hưng Đạo - Long Xuyên</li>
+                                    <li> - An Giang - Việt Nam.</li>
                                     <li>info@eshop.com</li>
-                                    <li>+032 3456 7890</li>
+                                    <li>+084 3456 7890</li>
                                 </ul>
                             </div>
                             <!-- End Single Widget -->
@@ -352,12 +334,12 @@
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="left">
-                                <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+                                <p>Copyright © 2021 <a href="#">Nhóm 18 - Công nghệ Web</a></p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="right">
-                                <img src="~/Content/User/images/payments.png" alt="#">
+                                <img src="~/Content/User/images/thanhtoan2.png" alt="#">
                             </div>
                         </div>
                     </div>

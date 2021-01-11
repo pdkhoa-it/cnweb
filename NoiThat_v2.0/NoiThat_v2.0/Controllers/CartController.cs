@@ -140,7 +140,7 @@ namespace NoiThat_v2._0.Controllers
         public ActionResult GiamGia(string MaGG)
         {
             ThanhToan tt = (ThanhToan)Session["thanhtoan"];
-            if (MaGG == "eshop" && tt.GiamGia == 0)
+            if (MaGG == "furniture" && tt.GiamGia == 0)
             {
                 tt.GiamGia = 50;
                 tt.CanThanhToan = tt.TongTien - tt.GiamGia;

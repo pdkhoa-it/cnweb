@@ -1,0 +1,212 @@
+﻿@model NoiThat_v2._0.Models.TaiKhoan
+
+@using NoiThat_v2._0.Models
+
+@{
+    ViewBag.Title = "Tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    TaiKhoan tk = (TaiKhoan)Session["user"];
+}
+
+<!-- Start Contact -->
+<section id="contact-us" class="contact-us section">
+    <div class="container">
+        <div class="contact-head">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="form-main">
+
+                        <div class="nav-main">
+                            <!-- Tab Nav -->
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#ThongTin" role="tab"><h4>Thông tin khách hàng</h4></a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#DoiMatKhau" role="tab"><h4>Đổi mật khẩu</h4></a></li>
+                            </ul>
+                            <!--/ End Tab Nav -->
+                        </div>
+
+                        <div class="title"></div>
+
+                        @if (Session["user"] == null)
+                        {
+                            Response.Redirect("/TrangChu/Index");
+                        }
+                        else
+                        {
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="ThongTin" role="tabpanel">
+                                    <div class="tab-single">
+                                        @using (Ajax.BeginForm("Edit", "User", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_ThongTin" }))
+                                        {
+                                            <input type="text" name="ID" value="@tk.ID" hidden />
+                                            <div class="form">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label class="text-danger" id="ThongTin_Mess"></label>
+                                                    </div>
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Họ và tên<span>*</span></label>
+                                                            @Html.Editor("HoTen", new { htmlAttributes = new { @class = "form-control", @Value = tk.HoTen, @type = "text" } })
+                                                            @Html.ValidationMessage("HoTen", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Email<span>*</span></label>
+                                                            @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @Value = tk.Email, @type = "email" } })
+                                                            @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Số điện thoại</label>
+                                                            @Html.Editor("Sdt", new { htmlAttributes = new { @class = "form-control", @Value = tk.Sdt, @type = "number" } })
+                                                            @Html.ValidationMessage("Sdt", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="row">
+                                                            <div class="form-group col-lg-8">
+                                                                <label>Ngày sinh</label>
+                                                                @Html.Editor("NgaySinh", new { htmlAttributes = new { @class = "form-control", @Value = tk.NgaySinh, @type = "text" } })
+                                                                @Html.ValidationMessage("NgaySinh", "", new { @class = "text-danger" })
+                                                            </div>
+                                                            <div class="form-group col-lg-4">
+                                                                <label>Giới tính</label>
+                                                                <select name="GioiTinh" id="GioiTinh">
+                                                                    <option value="Nam">Nam</option>
+                                                                    <option value="Nữ">Nữ</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group message">
+                                                            <label>Địa chỉ</label>
+                                                            @Html.Editor("DiaChi", new { htmlAttributes = new { @class = "form-control", @Value = tk.DiaChi, @type = "text" } })
+                                                            @Html.ValidationMessage("DiaChi", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group button">
+                                                            <button type="submit" class="btn ">Cập nhật</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="DoiMatKhau" role="tabpanel">
+                                    <div class="tab-single">
+                                        @using (Ajax.BeginForm("ChangePass", "User", new AjaxOptions { HttpMethod = "POST", OnSuccess = "Success_Pass" }))
+                                        {
+                                            <input type="text" name="ID" value="@tk.ID" hidden />
+                                            <div class="form">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label class="text-danger" id="MatKhau_Mess_False"></label>
+                                                        <label class="text-success" id="MatKhau_Mess_True"></label>
+                                                    </div>
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Mật khẩu cũ<span>*</span></label>
+                                                            <input type="password" name="MatKhauCu" id="MatKhauCu" class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-12"></div>
+
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Mật khẩu mới<span>*</span></label>
+                                                            @Html.Editor("MatKhau", new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                                            @Html.ValidationMessage("MatKhau", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Xác nhận mật khẩu mới<span>*</span></label>
+                                                            @Html.Editor("XacNhanMatKhau", new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                                            @Html.ValidationMessage("XacNhanMatKhau", "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group button">
+                                                            <button type="submit" class="btn ">Cập nhật</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="single-head">
+                        <div class="single-info">
+                            <i class="fa fa-phone"></i>
+                            <h4 class="title">Gọi chúng tôi 24/7:</h4>
+                            <ul>
+                                <li> +(84) 01234 5678</li>
+                                <li> +(84) 3456 7890</li>
+                            </ul>
+                        </div>
+                        <div class="single-info">
+                            <i class="fa fa-envelope-open"></i>
+                            <h4 class="title">Email:</h4>
+                            <ul>
+                                <li><a href="mailto:info@eshop.com">info@eshop.com</a></li>
+                                <li><a href="mailto:support@eshop.com">support@eshop.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="single-info">
+                            <i class="fa fa-location-arrow"></i>
+                            <h4 class="title">Địa chỉ:</h4>
+                            <ul>
+                                <li>Số 128 Trần Hưng Đạo - Long Xuyên - An Giang - Việt Nam.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ End Contact -->
+
+
+<script>
+    function Success_ThongTin(data) {
+        if (data.success)
+            location.reload();
+        else
+            $('#ThongTin_Mess').html(data.message);
+    }
+
+    function Success_Pass(data) {
+        if (data.success)
+        {
+            $('#MatKhauCu').val('');
+            $('#MatKhau').val('');
+            $('#XacNhanMatKhau').val('');
+            $('#MatKhau_Mess_True').html(data.message);
+        }
+        else
+            $('#MatKhau_Mess_False').html(data.message);
+    }
+</script>

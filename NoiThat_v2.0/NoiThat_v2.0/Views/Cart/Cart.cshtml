@@ -2,7 +2,7 @@
 @using NoiThat_v2._0.Models
 
 @{
-    ViewBag.Title = "Cart";
+    ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -18,9 +18,9 @@
         {
         <div class="container">
             <h4>Chưa có sản phẩn trong giỏ!</h4>
-            @using(Html.BeginForm("Index", "TrangChu"))
+            @using (Html.BeginForm("Index", "TrangChu"))
             {
-                <button type="submit" class="btn">Về trang chủ</button>
+                <button type="submit" class="btn m-5">Về trang chủ</button>
             }
         </div>
         }
@@ -33,11 +33,11 @@
                         <table class="table shopping-summery">
                             <thead>
                                 <tr class="main-hading">
-                                    <th>PRODUCT</th>
-                                    <th>NAME</th>
-                                    <th class="text-center">UNIT PRICE</th>
-                                    <th class="text-center">QUANTITY</th>
-                                    <th class="text-center">TOTAL</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Tên</th>
+                                    <th class="text-center">Giá</th>
+                                    <th class="text-center">Số lượng</th>
+                                    <th class="text-center">Tạm tính</th>
                                     <th class="text-center"><i class="ti-trash remove-icon"></i></th>
                                 </tr>
                             </thead>
@@ -50,7 +50,7 @@
                                             <p class="product-name"><a href="#">@item.Ten</a></p>
                                             <p class="product-des">@item.Mota</p>
                                         </td>
-                                        <td class="price" data-title="Price"><span>@item.Gia </span></td>
+                                        <td class="price" data-title="Price"><span>@item.Gia.ToString("N0") VND</span></td>
                                         <td class="qty" data-title="Qty">
                                             <!-- Input Order -->
                                             <div class="input-group">
@@ -74,7 +74,7 @@
                                             </div>
                                             <!--/ End Input Order -->
                                         </td>
-                                        <td class="total-amount" data-title="Total"><span>@(item.SoLuong * item.Gia)</span></td>
+                                        <td class="total-amount" data-title="Total"><span>@((item.SoLuong * item.Gia).ToString("N0")) VND</span></td>
                                         <td class="action" data-title="Remove">
                                             @using (Html.BeginForm("DeleteCart_Cart", "Cart", new { ID = item.ID }, FormMethod.Post))
                                             {
@@ -107,10 +107,10 @@
                                 <div class="col-lg-4 col-md-7 col-12">
                                     <div class="right">
                                         <ul>
-                                            <li>Tổng tiền<span>@tt.TongTien</span></li>
+                                            <li>Tổng tiền<span>@tt.TongTien.ToString("N0")</span></li>
                                             <li>Phí giao hàng<span>Miễn phí</span></li>
-                                            <li>Giảm giá<span>@tt.GiamGia</span></li>
-                                            <li class="last">Cần thanh toán<span>@tt.CanThanhToan</span></li>
+                                            <li>Giảm giá<span>@tt.GiamGia.ToString("N0")</span></li>
+                                            <li class="last">Cần thanh toán<span>@tt.CanThanhToan.ToString("N0") VND</span></li>
                                         </ul>
                                         <div class="button5">
                                             <a href="@Url.Action("Checkout", "Checkout")" class="btn">Thanh toán</a>
