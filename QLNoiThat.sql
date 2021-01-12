@@ -14,9 +14,6 @@ create table PhanQuyen
 );
 go
 
-insert into PhanQuyen values(N'Quản Trị Viên');
-insert into PhanQuyen values(N'Khách Hàng');
-
 create table TaiKhoan
 (
 	ID int identity primary key,
@@ -43,7 +40,6 @@ create table NhomSanPham
 );
 go
 
-
 create table DanhMucSanPham
 (
 	ID int identity primary key,
@@ -67,7 +63,6 @@ create table NhaCungCap
 	NguoiDaiDien nvarchar(100) not null
 );
 go
-
 
 create table SanPham
 (
@@ -114,3 +109,16 @@ create table ChiTietDonHang
 	foreign key(IDDonhang) references DonHang(ID)
 );
 go
+
+--Nhập dữ liệu ban đầu cho bảng Phân Quyền--
+
+insert into PhanQuyen values(N'Quản Trị Viên');
+insert into PhanQuyen values(N'Khách Hàng');
+
+--Thêm tài khoản admin và người dùng ban đầu--
+
+insert into TaiKhoan(Email, MatKhau, XacNhanMatKhau, Salt, HoTen, NgaySinh, GioiTinh, DiaChi, Sdt, IDQuyen)
+			values('admin@gmail.com', '7fc6ff3d68c2dddc18722a3e946ef0', '7fc6ff3d68c2dddc18722a3e946ef0', 655, N'Quản trị viên', '01/01/2021', 'Nam', N'Long Xuyên', '0123456789', 1)
+
+insert into TaiKhoan(Email, MatKhau, XacNhanMatKhau, Salt, HoTen, NgaySinh, GioiTinh, DiaChi, Sdt, IDQuyen)
+			values('nhtung@gmail.com', '2ea1aae2409b076510913710fd8968', '2ea1aae2409b076510913710fd8968', 785, N'Nguyễn Hoàng Tùng', '16/9/1999', 'Nam', N'Long Xuyên', '0123456789', 2)

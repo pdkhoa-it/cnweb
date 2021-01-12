@@ -1,7 +1,7 @@
 
 #Chào mừng đến với Furniture Store - Nhóm 18 - Công nghệ Web
 
-/*Đây là một trang web đơn giản ứng dụng công nghệ ASP .NET MVC 5*/
+/*Đây là một trang web đơn giản ứng dụng công nghệ ASP .NET MVC 5 và SQL Server*/
 
 /*Liên kết github https://github.com/pdkhoa-it/cnweb */
 
@@ -11,13 +11,8 @@
 	- Mật khẩu     : 1234
 	
 	**Khách hàng**
-	- Tài khoản 1:
-		+ Tên đăng nhập: nhtung@gmail.com
-		+ Mật khẩu     : 1234
-	
-	- Tài khoản 2:
-		+ Tên đăng nhập:
-		+ Mật khẩu     :
+	- Tên đăng nhập: nhtung@gmail.com
+	- Mật khẩu     : 1234
 
 #Qui trình thêm, xóa dữ liệu
 	**Thêm**
