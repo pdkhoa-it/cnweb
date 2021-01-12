@@ -1,4 +1,4 @@
-﻿using NoiThat_v2._0.Models;
+﻿using NoiThat_v2._0.Areas.Admin.Models;
 using NoiThat_v2._0.ViewModels;
 using System;
 using System.Collections.Generic;

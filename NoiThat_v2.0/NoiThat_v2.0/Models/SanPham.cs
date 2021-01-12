@@ -9,12 +9,6 @@ namespace NoiThat_v2._0.Models
     [Table("SanPham")]
     public partial class SanPham
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SanPham()
-        {
-            ChiTietDonHangs = new HashSet<ChiTietDonHang>();
-        }
-
         public int ID { get; set; }
 
         [Required]
@@ -38,12 +32,5 @@ namespace NoiThat_v2._0.Models
         public int IDNCC { get; set; }
 
         public int IDDanhMucSP { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
-
-        public virtual DanhMucSanPham DanhMucSanPham { get; set; }
-
-        public virtual NhaCungCap NhaCungCap { get; set; }
     }
 }

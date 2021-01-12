@@ -1,4 +1,5 @@
-﻿using NoiThat_v2._0.Models;
+﻿using NoiThat_v2._0.Areas.Admin.Models;
+using NoiThat_v2._0.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,8 @@ namespace NoiThat_v2._0.Controllers
                     
                     if(AddTaiKhoan == "Add" && db.TaiKhoans.Where(p => p.Email == dh.Email).FirstOrDefault() == null)
                     {
-                        TaiKhoan tk = new TaiKhoan();
+                        DBNoiThat_User db_u = new DBNoiThat_User();
+                        NoiThat_v2._0.Models.TaiKhoan tk = new NoiThat_v2._0.Models.TaiKhoan();
                         tk.Email = dh.Email;
                         tk.HoTen = dh.HoTen;
                         tk.DiaChi = dh.DiaChiGiaoHang;
@@ -61,10 +63,10 @@ namespace NoiThat_v2._0.Controllers
                         tk.MatKhau = GetMD5(dh.Sdt + tk.Salt.ToString());
                         tk.XacNhanMatKhau = tk.MatKhau;
                         tk.IDQuyen = 2;
-                        db.TaiKhoans.Add(tk);
+                        db_u.TaiKhoans.Add(tk);
                         db.SaveChanges();
 
-                        tk = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault();
+                        tk = db_u.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault();
 
                         Session.Add("user", tk);
                     }

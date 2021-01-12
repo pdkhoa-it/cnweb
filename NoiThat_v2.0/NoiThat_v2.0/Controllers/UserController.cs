@@ -20,7 +20,7 @@ namespace NoiThat_v2._0.Controllers
         [HttpPost]
         public ActionResult Edit(TaiKhoan tk)
         {
-            using(DBNoiThat db = new DBNoiThat())
+            using(DBNoiThat_User db = new DBNoiThat_User())
             {
                 TaiKhoan tk2 = db.TaiKhoans.Where(p => p.ID == tk.ID).FirstOrDefault();
 
@@ -50,7 +50,7 @@ namespace NoiThat_v2._0.Controllers
         [HttpPost]
         public ActionResult ChangePass(TaiKhoan tk, string MatKhauCu)
         {
-            using(DBNoiThat db = new DBNoiThat())
+            using(DBNoiThat_User db = new DBNoiThat_User())
             {
                 TaiKhoan tk2 = db.TaiKhoans.Where(p => p.ID == tk.ID).FirstOrDefault();
 

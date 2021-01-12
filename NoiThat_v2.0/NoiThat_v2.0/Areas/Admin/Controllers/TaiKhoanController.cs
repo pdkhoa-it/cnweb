@@ -105,7 +105,7 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
                         tk2.NgaySinh = tk.NgaySinh;
                         tk2.Sdt = tk.Sdt;
                         tk2.GioiTinh = tk.GioiTinh;
-                        tk2.GioiTinh = tk.GioiTinh;
+                        tk2.DiaChi = tk.DiaChi;
                         tk2.IDQuyen = tk.IDQuyen;
                         db.SaveChanges();
                         return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);

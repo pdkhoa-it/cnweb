@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<NoiThat_v2._0.ViewModels.SanPhamViewModel>
 
-@using NoiThat_v2._0.Models
+@using NoiThat_v2._0.Areas.Admin.Models
 
 @{
     ViewBag.Title = "Trang chủ";
@@ -91,14 +91,14 @@
                                                                     </a>
                                                                     <div class="button-head">
                                                                         <div class="product-action">
-                                                                            <a title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                                            <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                                            <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                                                            <a title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Xem nhanh</span></a>
+                                                                            <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Thích</span></a>
+                                                                            <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
                                                                         </div>
                                                                         <div class="product-action-2">
                                                                             @using (Html.BeginForm("AddToCart", "Cart", new { ID = item.ID }, FormMethod.Post))
                                                                             {
-                                                                                <button type="submit" class="btn" title="Add to cart">Add to cart</button>
+                                                                                <button type="submit" class="btn" title="Add to cart">Thêm vào giỏ</button>
                                                                             }
                                                                         </div>
                                                                     </div>
@@ -134,14 +134,14 @@
                                                                     </a>
                                                                     <div class="button-head">
                                                                         <div class="product-action">
-                                                                            <a title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                                            <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                                            <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                                                            <a title="Quick View" onclick="QuickViewModal(@item.ID)"><i class=" ti-eye"></i><span>Xem nhanh</span></a>
+                                                                            <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Thích</span></a>
+                                                                            <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>So sánh</span></a>
                                                                         </div>
                                                                         <div class="product-action-2">
                                                                             @using (Html.BeginForm("AddToCart", "Cart", new { ID = item.ID }, FormMethod.Post))
                                                                             {
-                                                                                <button type="submit" class="btn" title="Add to cart">Add to cart</button>
+                                                                                <button type="submit" class="btn" title="Add to cart">Thêm vào giỏ</button>
                                                                             }
                                                                         </div>
                                                                     </div>
@@ -318,11 +318,11 @@
                                 @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
                                 {
                                     <input type="text" name="ID" id="ID" hidden />
-                                    <button type="submit" class="btn" title="Add to cart">Add to cart</button>
+                                    <button type="submit" class="btn" title="Add to cart">Thêm vào giỏ</button>
                                 }
                             </div>
                             <div class="default-social">
-                                <h4 class="share-now">Share:</h4>
+                                <h4 class="share-now">Chia sẻ:</h4>
                                 <ul>
                                     <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                                     <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>

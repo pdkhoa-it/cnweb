@@ -13,5 +13,11 @@ namespace NoiThat_v2._0.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            Session.Remove("admin");
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -1,4 +1,4 @@
-namespace NoiThat_v2._0.Areas.Admin.Models
+﻿namespace NoiThat_v2._0.Areas.Admin.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace NoiThat_v2._0.Areas.Admin.Models
 
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập tên sản phẩm!")]
         [StringLength(100)]
         public string Ten { get; set; }
 
@@ -30,14 +30,17 @@ namespace NoiThat_v2._0.Areas.Admin.Models
         [StringLength(100)]
         public string Ten_img { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng nhập giá sản phẩm!")]
         public decimal Gia { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập mô tả sản phẩm!")]
         [StringLength(500)]
         public string MoTa { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng chọn nhà cung cấp!")]
         public int IDNCC { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng chọn danh mục!")]
         public int IDDanhMucSP { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

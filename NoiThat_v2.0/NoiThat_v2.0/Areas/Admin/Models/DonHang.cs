@@ -1,4 +1,4 @@
-namespace NoiThat_v2._0.Areas.Admin.Models
+﻿namespace NoiThat_v2._0.Areas.Admin.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,23 +17,23 @@ namespace NoiThat_v2._0.Areas.Admin.Models
 
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập tên khách hàng!")]
         [StringLength(50)]
         public string HoTen { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại!")]
         [StringLength(20)]
         public string Sdt { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập email!")]
         [StringLength(100)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập thời gian!")]
         [StringLength(20)]
         public string ThoiGian { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập địa chỉ!")]
         [StringLength(100)]
         public string DiaChiGiaoHang { get; set; }
 

@@ -62,7 +62,7 @@
         <tr>
             <th>Ảnh</th>
             <th>Tên sản phẩm</th>
-            <th>Giá</th>
+            <th>Giá (VND)</th>
             <th>Danh mục</th>
             <th>Nhóm</th>
             <th>Nhà cung cấp</th>
@@ -137,7 +137,7 @@
                 { "data": "Mota", "visible": false, },
                 {
                     "data": "ID", "render": function (id) {
-                        return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/SanPham/Delete')>Delete</a>";
+                        return "<a class='btn btn-primary' onclick=BeginEdit('" + id + "') ><i class='fa fa-pencil-alt'></i></a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/SanPham/Delete')><i class='fa fa-trash'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false,

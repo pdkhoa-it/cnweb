@@ -1,4 +1,4 @@
-namespace NoiThat_v2._0.Areas.Admin.Models
+﻿namespace NoiThat_v2._0.Areas.Admin.Models
 {
     using System;
     using System.Collections.Generic;
@@ -12,10 +12,12 @@ namespace NoiThat_v2._0.Areas.Admin.Models
         [Key]
         public int IDCT { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng chọn sản phẩm!")]
         public int IDSanPham { get; set; }
 
         public int IDDonHang { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng nhập số lượng sản phẩm!")]
         public decimal SoLuong { get; set; }
 
         public decimal DonGia { get; set; }

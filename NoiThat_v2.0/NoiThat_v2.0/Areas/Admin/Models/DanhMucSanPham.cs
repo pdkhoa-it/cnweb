@@ -1,4 +1,4 @@
-namespace NoiThat_v2._0.Areas.Admin.Models
+﻿namespace NoiThat_v2._0.Areas.Admin.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,10 +16,11 @@ namespace NoiThat_v2._0.Areas.Admin.Models
         }
 
         public int ID { get; set; }
-
+        
+        [Required(ErrorMessage ="Vui lòng chọn nhóm sản phẩm!")]
         public int IDNhomSP { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập tên danh mục!")]
         [StringLength(50)]
         public string Ten { get; set; }
 

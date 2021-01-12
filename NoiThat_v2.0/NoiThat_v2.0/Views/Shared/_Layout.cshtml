@@ -1,5 +1,6 @@
 ﻿
 @using NoiThat_v2._0.Models
+@using NoiThat_v2._0.Areas.Admin.Models
 
 @{
     Layout = null;
@@ -77,8 +78,8 @@
                         <!-- Top Left -->
                         <div class="top-left">
                             <ul class="list-main">
-                                <li><i class="ti-headphone-alt"></i> +84 123 456 789</li>
-                                <li><i class="ti-email"></i> support@eshop.com</li>
+                                <li><i class="ti-headphone-alt"></i> 0123 456 789</li>
+                                <li><i class="ti-email"></i> support@furniture.com</li>
                             </ul>
                         </div>
                         <!--/ End Top Left -->
@@ -90,7 +91,7 @@
                                 @{
                                     if (Session["user"] != null)
                                     {
-                                        TaiKhoan item = (TaiKhoan)Session["user"];
+                                        NoiThat_v2._0.Models.TaiKhoan item = (NoiThat_v2._0.Models.TaiKhoan)Session["user"];
                                         <li><i class="ti-user"></i> <a href="@Url.Action("User", "User")">@item.HoTen</a></li>
                                         <li><i class="ti-power-off"></i><a href="#" onclick="Logout()">Đăng xuất</a></li>
                                     }
@@ -270,7 +271,7 @@
                                 <a href="@Url.Action("Index", "TrangChu")"><img src="~/Content/User/images/logo2.png" alt="#"></a>
                             </div>
                             <p class="text">Hãy biến ý tưởng của bạn thành hiện thực với các chương trình giảm giá đặc biệt, nguồn cảm hứng và rất nhiều ý tưởng mới trong cửa hàng. Hoàn toàn miễn phí.</p>
-                            <p class="call">Mọi thắc mắc? Gọi chúng tôi 24/7<span><a href="tel:123456789">+(84) 01234 5678</a></span></p>
+                            <p class="call">Mọi thắc mắc? Gọi chúng tôi 24/7<span><a href="tel:123456789">0123 456 789</a></span></p>
                         </div>
                         <!-- End Single Widget -->
                     </div>
@@ -310,8 +311,8 @@
                                     <li>Số 128</li>
                                     <li>Trần Hưng Đạo - Long Xuyên</li>
                                     <li> - An Giang - Việt Nam.</li>
-                                    <li>info@eshop.com</li>
-                                    <li>+084 3456 7890</li>
+                                    <li>support@furniture.com</li>
+                                    <li>0123 456 789</li>
                                 </ul>
                             </div>
                             <!-- End Single Widget -->
@@ -334,7 +335,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="left">
-                                <p>Copyright © 2021 <a href="#">Nhóm 18 - Công nghệ Web</a></p>
+                                <p>Copyright © <span id="year"></span> <a href="#">Nhóm 18 - Công nghệ Web</a></p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -352,6 +353,11 @@
     <div>
         @Html.Action("Index", "Login")
     </div>
+
+    <script>
+        var date = new Date();
+        document.getElementById("year").innerHTML = date.getFullYear() + " ";
+    </script>
 
     <!-- Jquery -->
     <script src="~/Content/User/js/jquery.min.js"></script>

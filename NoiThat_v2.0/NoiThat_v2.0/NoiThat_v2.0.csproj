@@ -173,13 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChiTietDonHang.cs" />
-    <Compile Include="Models\DanhMucSanPham.cs" />
-    <Compile Include="Models\DBNoiThat.cs" />
-    <Compile Include="Models\DonHang.cs" />
-    <Compile Include="Models\NhaCungCap.cs" />
-    <Compile Include="Models\NhomSanPham.cs" />
-    <Compile Include="Models\PhanQuyen.cs" />
+    <Compile Include="Models\DBNoiThat_User.cs" />
     <Compile Include="Models\SanPham.cs" />
     <Compile Include="Models\SanPhamCart.cs" />
     <Compile Include="Models\TaiKhoan.cs" />
@@ -1880,6 +1874,7 @@
     <Content Include="Content\User\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\User\fonts\themify.svg" />
     <Content Include="Content\User\images\favicon.png" />
+    <Content Include="Content\User\images\login.png" />
     <Content Include="Content\User\images\logo.png" />
     <Content Include="Content\User\images\logo2.png" />
     <Content Include="Content\User\images\map-marker.png" />

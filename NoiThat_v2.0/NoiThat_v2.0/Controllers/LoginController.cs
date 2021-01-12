@@ -7,8 +7,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using DBNoiThat = NoiThat_v2._0.Models.DBNoiThat;
-using TaiKhoan = NoiThat_v2._0.Models.TaiKhoan;
 
 namespace NoiThat_v2._0.Controllers
 {
@@ -23,14 +21,14 @@ namespace NoiThat_v2._0.Controllers
         [HttpPost]
         public ActionResult Login(string Email, string MatKhau)
         {
-            using (DBNoiThat db = new DBNoiThat())
+            using ( DBNoiThat_User db_u = new DBNoiThat_User())
             {
-                if (db.TaiKhoans.Where(p => p.Email == Email).FirstOrDefault() == null)
+                if (db_u.TaiKhoans.Where(p => p.Email == Email).FirstOrDefault() == null)
                 {
                     return Json(new { success = false, message = "Email không tồn tại!" }, JsonRequestBehavior.AllowGet);
                 }
 
-                TaiKhoan tk = db.TaiKhoans.Where(p => p.Email == Email).FirstOrDefault();
+                NoiThat_v2._0.Models.TaiKhoan tk = db_u.TaiKhoans.Where(p => p.Email == Email).FirstOrDefault();
 
                 MatKhau = GetMD5(MatKhau + tk.Salt.ToString());
 
@@ -60,11 +58,11 @@ namespace NoiThat_v2._0.Controllers
         }
 
         [HttpPost]
-        public ActionResult Sign_up(TaiKhoan tk)
+        public ActionResult Sign_up(NoiThat_v2._0.Models.TaiKhoan tk)
         {
-            using(DBNoiThat db = new DBNoiThat())
+            using(DBNoiThat_User db_u = new DBNoiThat_User())
             {
-                if (db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault() != null)
+                if (db_u.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault() != null)
                 {
                     return Json(new { success = false, message = "Email đã tồn tại! Hãy thử đăng ký với một email khác!" }, JsonRequestBehavior.AllowGet);
                 }
@@ -74,10 +72,10 @@ namespace NoiThat_v2._0.Controllers
                 tk.MatKhau = GetMD5(tk.MatKhau + tk.Salt.ToString());
                 tk.XacNhanMatKhau = tk.MatKhau;
                 tk.IDQuyen = 2;
-                db.TaiKhoans.Add(tk);
-                db.SaveChanges();
+                db_u.TaiKhoans.Add(tk);
+                db_u.SaveChanges();
 
-                tk = db.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault();
+                tk = db_u.TaiKhoans.Where(p => p.Email == tk.Email).FirstOrDefault();
 
                 Session.Add("user", tk);
 

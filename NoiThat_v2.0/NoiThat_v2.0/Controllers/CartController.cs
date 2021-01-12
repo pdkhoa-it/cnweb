@@ -1,4 +1,5 @@
-﻿using NoiThat_v2._0.Models;
+﻿using NoiThat_v2._0.Areas.Admin.Models;
+using NoiThat_v2._0.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,7 +143,7 @@ namespace NoiThat_v2._0.Controllers
             ThanhToan tt = (ThanhToan)Session["thanhtoan"];
             if (MaGG == "furniture" && tt.GiamGia == 0)
             {
-                tt.GiamGia = 50;
+                tt.GiamGia = 500000;
                 tt.CanThanhToan = tt.TongTien - tt.GiamGia;
             }    
             return RedirectToAction("Cart", "Cart");

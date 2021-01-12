@@ -1,4 +1,4 @@
-namespace NoiThat_v2._0.Models
+﻿namespace NoiThat_v2._0.Models
 {
     using System;
     using System.Collections.Generic;
@@ -11,19 +11,21 @@ namespace NoiThat_v2._0.Models
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập email!")]
         [StringLength(100)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu!")]
+        [MinLength(4,ErrorMessage = "Mật khẩu phải có ít nhất 4 ký tự!")]
         public string MatKhau { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng xác nhận mật khẩu!")]
+        [Compare("MatKhau")]
         public string XacNhanMatKhau { get; set; }
 
         public int Salt { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
         [StringLength(50)]
         public string HoTen { get; set; }
 
@@ -40,7 +42,5 @@ namespace NoiThat_v2._0.Models
         public string Sdt { get; set; }
 
         public int IDQuyen { get; set; }
-
-        public virtual PhanQuyen PhanQuyen { get; set; }
     }
 }

@@ -89,7 +89,7 @@
                 { "data": "DaGiamGia" },
                 {
                     "data": "ID", "render": function (id) {
-                        return "<a class='btn btn-secondary' onclick = 'ChiTiet(" + id + ")'>Chi Tiết</a><a class='btn btn-primary' onclick=BeginEdit('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/DonHang/Delete')>Delete</a>";
+                        return "<a class='btn btn-secondary' onclick = 'ChiTiet(" + id + ")'><i class='fa fa-info'></i></a><a class='btn btn-primary' onclick=BeginEdit('" + id + "') ><i class='fa fa-pencil-alt'></i></a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/DonHang/Delete')><i class='fa fa-trash'></i></a>";
                     },
                     "orderable": false,
                     "searchable": false,
@@ -208,7 +208,7 @@
                 { "data": "ThanhTien" },
                 {
                     "data": "IDCT", "render": function (id) {
-                        return "<a class='btn btn-primary' onclick=BeginEditCTDH('" + id + "') >Edit</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/DonHang/DeleteCTDH')>Delete</a>";
+                        return "<a class='btn btn-primary' onclick=BeginEditCTDH('" + id + "') >Sửa</a><a class='btn btn-danger' onclick=BeginDelete('" + id + "','/DonHang/DeleteCTDH')>Xóa</a>";
                     },
                     "orderable": false,
                     "searchable": false,
